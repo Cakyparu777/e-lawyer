@@ -21,6 +21,7 @@ The backend is FastAPI + PostgreSQL. Payments are pluggable through provider ada
 │   ├── screens/
 │   │   ├── admin/
 │   │   ├── auth/
+│   │   ├── chat/
 │   │   ├── client/
 │   │   └── lawyer/
 │   ├── state/               # Zustand auth store
@@ -115,6 +116,10 @@ For Android emulator, set `EXPO_PUBLIC_API_URL=http://10.0.2.2:8000/api`. For a 
 - `PUT /api/lawyers/me/profile` lets lawyers manage bio, categories, availability, credentials, and price.
 - `POST /api/payments/checkout` creates a pending appointment/payment hold.
 - `POST /api/payments/{id}/confirm` verifies payment, confirms appointment, and notifies the lawyer.
+- `GET /api/chats/appointments/{appointment_id}` opens the paid appointment chat for the client/lawyer.
+- `GET /api/chats/appointments/{appointment_id}/rtm-token` returns a short-lived Agora RTM token for that paid appointment participant.
+- `POST /api/chats/{thread_id}/messages` sends a chat message inside a paid appointment thread.
+- `GET /api/chats/agora/config` returns non-secret Agora chat config when `CHAT_PROVIDER=agora`.
 - `GET /api/appointments` returns role-filtered appointments. Lawyers receive paid client contact snapshots.
 - `PATCH /api/appointments/{id}` lets lawyers/admins complete or cancel appointments.
 - `POST /api/reviews` allows one review only for the paying client on a paid completed appointment.
@@ -141,7 +146,29 @@ Each stores `name` and `description` as JSON i18n maps (`en`, `mn`).
 - Appointments are only confirmed after `PaymentStatus.SUCCEEDED`.
 - Reviews are gated by server checks: same client, paid payment, completed appointment, one review per appointment.
 - Lawyer contact details are not exposed in public profiles. Lawyers see the paying client's phone/email only through their appointment contact snapshot.
+- Paid appointments create a private chat thread. If the lawyer has set an auto-response message in profile settings, it is sent automatically after payment confirmation with the lawyer's contact line appended.
 - Push notification delivery is isolated in `NotificationService`; plug Expo Push or FCM there.
+
+## Chat and Agora
+
+The current chat implementation is server-authorized and stored in PostgreSQL so development works immediately. It creates one chat thread per paid appointment, gates access to the paying client and booked lawyer, and inserts the lawyer's saved auto-response after payment.
+
+When `CHAT_PROVIDER=agora`, the backend also mints short-lived Agora RTM tokens from the App ID/App Certificate. The app attempts to use Agora RTM where the JavaScript RTM SDK is supported, then keeps PostgreSQL as message history and audit storage. Expo Go native builds use the server-backed chat fallback; native realtime RTM should be added through a development build/native SDK phase if required.
+
+Agora is scaffolded as a pluggable provider. Add these values to `backend/.env` when you want me to wire the Agora SDK transport:
+
+- `CHAT_PROVIDER=agora`
+- `AGORA_APP_ID`
+- `AGORA_PROJECT_ID`
+- `AGORA_PROJECT_NAME`
+- `AGORA_REGION`
+- `AGORA_ENABLED_FEATURES`
+- `AGORA_FEATURE_RTM=true`
+- `AGORA_APP_CERTIFICATE` if token authentication is enabled
+- `AGORA_CUSTOMER_ID`
+- `AGORA_CUSTOMER_SECRET`
+
+Also tell me whether you want Agora Chat only, or Chat plus voice/video calling in the same phase.
 
 ## Payment Providers
 

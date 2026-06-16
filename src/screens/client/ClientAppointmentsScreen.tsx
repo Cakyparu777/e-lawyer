@@ -39,6 +39,14 @@ export function ClientAppointmentsScreen({ navigation }: Props) {
               </View>
               <StatusChip status={appointment.status} />
             </View>
+            {appointment.status === "CONFIRMED" || appointment.status === "COMPLETED" ? (
+              <Button
+                title="Чат нээх"
+                variant="secondary"
+                icon="chatbubble"
+                onPress={() => navigation.navigate("Chat", { appointmentId: appointment.id })}
+              />
+            ) : null}
             {appointment.status === "COMPLETED" ? (
               <Button
                 title="Үнэлгээ үлдээх"

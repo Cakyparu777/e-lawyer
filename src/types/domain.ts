@@ -30,6 +30,7 @@ export type Lawyer = {
   price_per_consultation: number;
   currency: string;
   credentials: string;
+  auto_response_message?: string | null;
   avg_rating: number;
   review_count: number;
   availability: Record<string, unknown>;
@@ -74,3 +75,35 @@ export type CheckoutResponse = {
   checkout_payload: Record<string, unknown>;
 };
 
+export type ChatMessage = {
+  id: string;
+  thread_id: string;
+  sender_id: string;
+  body: string;
+  message_type: "TEXT" | "AUTO_RESPONSE" | string;
+  created_at: string;
+};
+
+export type ChatThread = {
+  id: string;
+  appointment_id: string;
+  client_id: string;
+  lawyer_id: string;
+  agora_channel_id?: string | null;
+  created_at: string;
+  last_message_at: string;
+  lawyer_contact_snapshot: Record<string, string>;
+  client_contact_snapshot: Record<string, string>;
+  messages: ChatMessage[];
+};
+
+export type ChatThreadSummary = {
+  id: string;
+  appointment_id: string;
+  client_id: string;
+  lawyer_id: string;
+  agora_channel_id?: string | null;
+  last_message_at: string;
+  latest_message?: ChatMessage | null;
+  appointment: Appointment;
+};

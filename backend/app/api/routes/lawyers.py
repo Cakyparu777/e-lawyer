@@ -21,6 +21,7 @@ def _to_lawyer_out(profile: LawyerProfile, expose_contact: bool = False) -> Lawy
         price_per_consultation=profile.price_per_consultation,
         currency=profile.currency,
         credentials=profile.credentials,
+        auto_response_message=profile.auto_response_message if expose_contact else None,
         avg_rating=profile.avg_rating,
         review_count=profile.review_count,
         availability=profile.availability,
@@ -80,6 +81,7 @@ def upsert_my_lawyer_profile(
     profile.price_per_consultation = payload.price_per_consultation
     profile.currency = payload.currency
     profile.credentials = payload.credentials
+    profile.auto_response_message = payload.auto_response_message.strip() if payload.auto_response_message else None
     profile.availability = payload.availability
     db.commit()
     db.refresh(profile)

@@ -22,6 +22,19 @@ class Settings(BaseSettings):
     qpay_username: str | None = None
     qpay_password: str | None = None
     fcm_server_key: str | None = None
+    chat_provider: str = "local"
+    agora_app_id: str | None = None
+    agora_project_id: str | None = None
+    agora_project_name: str | None = None
+    agora_region: str = "global"
+    agora_enabled_features: str | None = None
+    agora_feature_rtc: bool = False
+    agora_feature_rtm: bool = False
+    agora_feature_convoai: bool = False
+    agora_app_certificate: str | None = None
+    agora_rtm_token_expire_seconds: int = 3600
+    agora_customer_id: str | None = None
+    agora_customer_secret: str | None = None
     cors_origins: Annotated[list[str], NoDecode] = [
         "http://localhost:8081",
         "http://localhost:19006",

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.api.routes import admin, appointments, auth, categories, devices, lawyers, payments, reviews, uploads, users
+from app.api.routes import admin, appointments, auth, categories, chats, devices, lawyers, payments, reviews, uploads, users
 from app.core.config import settings
 
 app = FastAPI(title="e-Lawyer API", version="0.1.0")
@@ -26,6 +26,7 @@ app.include_router(categories.router, prefix="/api")
 app.include_router(lawyers.router, prefix="/api")
 app.include_router(payments.router, prefix="/api")
 app.include_router(appointments.router, prefix="/api")
+app.include_router(chats.router, prefix="/api")
 app.include_router(reviews.router, prefix="/api")
 app.include_router(devices.router, prefix="/api")
 app.include_router(uploads.router, prefix="/api")

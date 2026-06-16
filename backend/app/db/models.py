@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import Boolean, DateTime, Enum, Float, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Boolean, DateTime, Enum, Float, ForeignKey, Index, Integer, String, Text, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -71,6 +71,7 @@ class LawyerProfile(Base):
     price_per_consultation: Mapped[int] = mapped_column(Integer)
     currency: Mapped[str] = mapped_column(String(8), default="MNT")
     credentials: Mapped[str] = mapped_column(Text)
+    auto_response_message: Mapped[str | None] = mapped_column(Text, nullable=True)
     avg_rating: Mapped[float] = mapped_column(Float, default=0)
     review_count: Mapped[int] = mapped_column(Integer, default=0)
     availability: Mapped[dict[str, Any]] = mapped_column(JSONB, default=dict)
@@ -112,6 +113,35 @@ class Appointment(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class ChatThread(Base):
+    __tablename__ = "chat_threads"
+    __table_args__ = (
+        UniqueConstraint("appointment_id"),
+        Index("ix_chat_threads_appointment_id", "appointment_id"),
+    )
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=new_id)
+    appointment_id: Mapped[str] = mapped_column(ForeignKey("appointments.id", ondelete="CASCADE"))
+    client_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    lawyer_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    agora_channel_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    last_message_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+    __table_args__ = (Index("ix_chat_messages_thread_created", "thread_id", "created_at"),)
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=new_id)
+    thread_id: Mapped[str] = mapped_column(ForeignKey("chat_threads.id", ondelete="CASCADE"), index=True)
+    sender_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    body: Mapped[str] = mapped_column(Text)
+    message_type: Mapped[str] = mapped_column(String(32), default="TEXT")
+    provider_message_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class Review(Base):
     __tablename__ = "reviews"
 
@@ -145,4 +175,3 @@ class DeviceToken(Base):
     token: Mapped[str] = mapped_column(String(255), unique=True)
     platform: Mapped[str] = mapped_column(String(32))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-

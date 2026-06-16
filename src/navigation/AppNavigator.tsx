@@ -11,6 +11,7 @@ import type {
   AuthStackParamList,
   ClientStackParamList,
   ClientTabParamList,
+  LawyerStackParamList,
   LawyerTabParamList
 } from "@/navigation/types";
 import { OnboardingScreen } from "@/screens/auth/OnboardingScreen";
@@ -31,10 +32,12 @@ import { LawyerAppointmentsScreen } from "@/screens/lawyer/LawyerAppointmentsScr
 import { LawyerReviewsScreen } from "@/screens/lawyer/LawyerReviewsScreen";
 import { LawyerProfileEditorScreen } from "@/screens/lawyer/LawyerProfileEditorScreen";
 import { AdminHomeScreen } from "@/screens/admin/AdminHomeScreen";
+import { ChatScreen } from "@/screens/chat/ChatScreen";
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const ClientStack = createNativeStackNavigator<ClientStackParamList>();
 const ClientTabs = createBottomTabNavigator<ClientTabParamList>();
+const LawyerStack = createNativeStackNavigator<LawyerStackParamList>();
 const LawyerTabs = createBottomTabNavigator<LawyerTabParamList>();
 const AdminStack = createNativeStackNavigator<AdminStackParamList>();
 
@@ -80,12 +83,13 @@ function ClientNavigator() {
       <ClientStack.Screen name="BookConsultation" component={BookConsultationScreen} />
       <ClientStack.Screen name="PaymentCheckout" component={PaymentCheckoutScreen} />
       <ClientStack.Screen name="BookingConfirmed" component={BookingConfirmedScreen} />
+      <ClientStack.Screen name="Chat" component={ChatScreen} />
       <ClientStack.Screen name="Review" component={ReviewScreen} />
     </ClientStack.Navigator>
   );
 }
 
-function LawyerNavigator() {
+function LawyerTabNavigator() {
   return (
     <LawyerTabs.Navigator
       screenOptions={{
@@ -116,6 +120,15 @@ function LawyerNavigator() {
         options={{ title: "Профайл", ...tabOptions("person-circle") }}
       />
     </LawyerTabs.Navigator>
+  );
+}
+
+function LawyerNavigator() {
+  return (
+    <LawyerStack.Navigator screenOptions={{ headerShown: false }}>
+      <LawyerStack.Screen name="LawyerTabs" component={LawyerTabNavigator} />
+      <LawyerStack.Screen name="Chat" component={ChatScreen} />
+    </LawyerStack.Navigator>
   );
 }
 

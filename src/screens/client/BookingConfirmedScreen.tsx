@@ -24,7 +24,8 @@ export function BookingConfirmedScreen({ route, navigation }: Props) {
           <Text style={styles.center} color={colors.onSurfaceVariant}>
             Төлбөр амжилттай хийгдэж, хуульчид мэдэгдэл илгээгдлээ. Захиалгын ID: {route.params.appointmentId}
           </Text>
-          <Button title="Захиалгаа харах" onPress={() => navigation.navigate("ClientTabs", { screen: "ClientAppointments" })} />
+          <Button title="Чат нээх" icon="chatbubble" onPress={() => navigation.navigate("Chat", { appointmentId: route.params.appointmentId })} />
+          <Button title="Захиалгаа харах" variant="secondary" onPress={() => navigation.navigate("ClientTabs", { screen: "ClientAppointments" })} />
         </Card>
       </View>
     </Screen>

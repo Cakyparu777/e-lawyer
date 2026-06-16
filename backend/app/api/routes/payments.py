@@ -13,6 +13,7 @@ from app.db.models import (
     UserRole,
 )
 from app.schemas import CheckoutRequest, CheckoutResponse, PaymentConfirmRequest, PaymentOut
+from app.services.chat import chat_service
 from app.services.notifications import notification_service
 from app.services.payments import get_payment_provider
 
@@ -118,6 +119,7 @@ def confirm_payment(
     payment.provider_ref = provider_ref
     payment.status = PaymentStatus.SUCCEEDED
     appointment.status = AppointmentStatus.CONFIRMED
+    chat_service.ensure_thread_for_paid_appointment(db, appointment)
     db.commit()
     notification_service.notify_lawyer_booking(db, appointment.lawyer_id, appointment.id)
     return payment

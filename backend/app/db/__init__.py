@@ -3,6 +3,8 @@ from app.db.models import (
     Appointment,
     AppointmentStatus,
     Category,
+    ChatMessage,
+    ChatThread,
     DeviceToken,
     LawyerProfile,
     OtpCode,
@@ -18,6 +20,8 @@ __all__ = [
     "AppointmentStatus",
     "Base",
     "Category",
+    "ChatMessage",
+    "ChatThread",
     "DeviceToken",
     "LawyerProfile",
     "OtpCode",
@@ -27,4 +31,3 @@ __all__ = [
     "User",
     "UserRole",
 ]
-

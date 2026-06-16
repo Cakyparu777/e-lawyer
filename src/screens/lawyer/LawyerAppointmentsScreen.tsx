@@ -1,4 +1,7 @@
 import { Alert, StyleSheet, View } from "react-native";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import type { CompositeScreenProps } from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { apiFetch } from "@/api/client";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
@@ -9,8 +12,14 @@ import { Text } from "@/components/Text";
 import { useAppointments } from "@/api/queries";
 import { colors } from "@/theme/colors";
 import type { Appointment } from "@/types/domain";
+import type { LawyerStackParamList, LawyerTabParamList } from "@/navigation/types";
 
-export function LawyerAppointmentsScreen() {
+type Props = CompositeScreenProps<
+  BottomTabScreenProps<LawyerTabParamList, "LawyerAppointments">,
+  NativeStackScreenProps<LawyerStackParamList>
+>;
+
+export function LawyerAppointmentsScreen({ navigation }: Props) {
   const appointments = useAppointments();
 
   async function updateStatus(id: string, status: "COMPLETED" | "CANCELLED") {
@@ -39,6 +48,14 @@ export function LawyerAppointmentsScreen() {
               {item.client_contact_snapshot?.username} | {item.client_contact_snapshot?.phoneNumber} |{" "}
               {item.client_contact_snapshot?.email}
             </Text>
+            {item.status === "CONFIRMED" || item.status === "COMPLETED" ? (
+              <Button
+                title="Чат нээх"
+                variant="secondary"
+                icon="chatbubble"
+                onPress={() => navigation.navigate("Chat", { appointmentId: item.id })}
+              />
+            ) : null}
             {item.status === "CONFIRMED" ? (
               <View style={styles.actions}>
                 <Button title="Дуусгах" onPress={() => updateStatus(item.id, "COMPLETED")} />

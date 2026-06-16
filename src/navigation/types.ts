@@ -14,6 +14,7 @@ export type ClientStackParamList = {
   BookConsultation: { lawyerId: string; categoryId: string };
   PaymentCheckout: { lawyerId: string; categoryId: string; dateTime: string };
   BookingConfirmed: { appointmentId: string };
+  Chat: { appointmentId: string };
   Review: { appointmentId: string; lawyerId: string };
 };
 
@@ -30,7 +31,11 @@ export type LawyerTabParamList = {
   LawyerProfileEditor: undefined;
 };
 
+export type LawyerStackParamList = {
+  LawyerTabs: undefined;
+  Chat: { appointmentId: string };
+};
+
 export type AdminStackParamList = {
   AdminHome: undefined;
 };
-

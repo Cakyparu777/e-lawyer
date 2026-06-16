@@ -32,6 +32,7 @@ export function LawyerProfileEditorScreen() {
   const categories = useCategories();
   const [bio, setBio] = useState("");
   const [credentials, setCredentials] = useState("");
+  const [autoResponse, setAutoResponse] = useState("");
   const [price, setPrice] = useState("150000");
   const [selected, setSelected] = useState<string[]>([]);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
@@ -44,6 +45,7 @@ export function LawyerProfileEditorScreen() {
       .then((profile) => {
         setBio(profile.bio);
         setCredentials(profile.credentials);
+        setAutoResponse(profile.auto_response_message || "");
         setPrice(String(profile.price_per_consultation));
         setSelected(profile.categories);
         setPhotoUrl(profile.photo_url || null);
@@ -86,6 +88,7 @@ export function LawyerProfileEditorScreen() {
           categories: selected,
           price_per_consultation: Number(price),
           currency: "MNT",
+          auto_response_message: autoResponse.trim() || null,
           availability: {
             timezone: "Asia/Ulaanbaatar",
             weekdays: weekdays.map((day) => day.key).filter((day) => selectedWeekdays.includes(day)),
@@ -136,6 +139,14 @@ export function LawyerProfileEditorScreen() {
         </Pressable>
         <TextField label="Мэргэжлийн мэдээлэл" value={credentials} onChangeText={setCredentials} placeholder="Өмгөөлөгчийн холбоо, компани, лиценз..." />
         <TextField label="Товч танилцуулга" value={bio} onChangeText={setBio} multiline style={styles.bio} />
+        <TextField
+          label="Төлбөрийн дараах автомат хариу"
+          value={autoResponse}
+          onChangeText={setAutoResponse}
+          multiline
+          style={styles.autoReply}
+          placeholder="Жишээ: Сайн байна уу, төлбөр баталгаажлаа. Асуух зүйлээ энд бичээрэй."
+        />
         <TextField label="Зөвлөгөөний үнэ" value={price} onChangeText={setPrice} keyboardType="number-pad" />
         <Text variant="label">Чиглэлүүд</Text>
         <View style={styles.chips}>
@@ -200,6 +211,7 @@ const styles = StyleSheet.create({
     gap: 6
   },
   bio: { minHeight: 110, textAlignVertical: "top" },
+  autoReply: { minHeight: 96, textAlignVertical: "top" },
   chips: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   dayGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   chip: {

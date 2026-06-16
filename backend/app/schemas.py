@@ -80,6 +80,7 @@ class LawyerProfileInput(BaseModel):
     price_per_consultation: int = Field(gt=0)
     currency: str = "MNT"
     credentials: str = Field(min_length=5)
+    auto_response_message: str | None = Field(default=None, max_length=2000)
     availability: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -94,6 +95,7 @@ class LawyerOut(BaseModel):
     price_per_consultation: int
     currency: str
     credentials: str
+    auto_response_message: str | None = None
     avg_rating: float
     review_count: int
     availability: dict[str, Any]
@@ -170,7 +172,57 @@ class ReviewOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ChatMessageCreate(BaseModel):
+    body: str = Field(min_length=1, max_length=2000)
+
+
+class ChatMessageOut(BaseModel):
+    id: str
+    thread_id: str
+    sender_id: str
+    body: str
+    message_type: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class ChatThreadSummary(BaseModel):
+    id: str
+    appointment_id: str
+    client_id: str
+    lawyer_id: str
+    agora_channel_id: str | None
+    last_message_at: datetime
+    latest_message: ChatMessageOut | None = None
+    appointment: AppointmentOut
+
+    model_config = {"from_attributes": True}
+
+
+class ChatThreadOut(BaseModel):
+    id: str
+    appointment_id: str
+    client_id: str
+    lawyer_id: str
+    agora_channel_id: str | None
+    created_at: datetime
+    last_message_at: datetime
+    lawyer_contact_snapshot: dict[str, str]
+    client_contact_snapshot: dict[str, str]
+    messages: list[ChatMessageOut]
+
+    model_config = {"from_attributes": True}
+
+
+class AgoraRtmTokenOut(BaseModel):
+    app_id: str
+    channel_name: str
+    user_id: str
+    token: str
+    expires_in: int
+
+
 class DeviceTokenIn(BaseModel):
     token: str
     platform: Literal["ios", "android", "web"]
-

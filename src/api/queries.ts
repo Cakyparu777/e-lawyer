@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/api/client";
-import type { Appointment, AuthResponse, Category, CheckoutResponse, Lawyer, Review } from "@/types/domain";
+import type { Appointment, AuthResponse, Category, ChatMessage, ChatThread, CheckoutResponse, Lawyer, Review } from "@/types/domain";
 
 export function useCategories() {
   return useQuery({ queryKey: ["categories"], queryFn: () => apiFetch<Category[]>("/categories") });
@@ -28,6 +28,15 @@ export function useLawyer(lawyerId: string) {
 
 export function useAppointments() {
   return useQuery({ queryKey: ["appointments"], queryFn: () => apiFetch<Appointment[]>("/appointments") });
+}
+
+export function useChatThread(appointmentId: string) {
+  return useQuery({
+    queryKey: ["chat", appointmentId],
+    queryFn: () => apiFetch<ChatThread>(`/chats/appointments/${appointmentId}`),
+    enabled: Boolean(appointmentId),
+    refetchInterval: 5000
+  });
 }
 
 export function useReviews(lawyerId: string) {
@@ -69,7 +78,25 @@ export function useConfirmPayment() {
   return useMutation({
     mutationFn: (paymentId: string) =>
       apiFetch(`/payments/${paymentId}/confirm`, { method: "POST", body: JSON.stringify({ mock_success: true }) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["appointments"] })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      queryClient.invalidateQueries({ queryKey: ["chat"] });
+    }
+  });
+}
+
+export function useSendChatMessage() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { thread_id: string; appointment_id: string; text: string }) =>
+      apiFetch<ChatMessage>(`/chats/${body.thread_id}/messages`, {
+        method: "POST",
+        body: JSON.stringify({ body: body.text })
+      }),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["chat", variables.appointment_id] });
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+    }
   });
 }
 
@@ -84,4 +111,3 @@ export function useCreateReview() {
     }
   });
 }
-

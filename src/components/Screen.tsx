@@ -14,7 +14,7 @@ export function Screen({ children, scroll = true, footer }: Props) {
       {children}
     </ScrollView>
   ) : (
-    <View style={styles.content}>{children}</View>
+    <View style={[styles.content, styles.fixedContent]}>{children}</View>
   );
   return (
     <SafeAreaView style={styles.safe}>
@@ -35,5 +35,8 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 600,
     alignSelf: "center"
+  },
+  fixedContent: {
+    flex: 1
   }
 });
