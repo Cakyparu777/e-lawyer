@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>e-Lawyer - Booking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#65a1fe",
+                        "on-tertiary-container": "#ad8d5b",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "secondary": "#055db6",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-fixed-dim": "#e5c18a",
+                        "on-primary-fixed": "#081b38",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#003670",
+                        "primary-fixed-dim": "#b6c7eb",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-container": "#1a2b48",
+                        "secondary-fixed": "#d6e3ff",
+                        "background": "#f8f9fa",
+                        "outline": "#75777e",
+                        "inverse-primary": "#b6c7eb",
+                        "on-primary-container": "#8293b5",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a9c7ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#211400",
+                        "on-tertiary-fixed-variant": "#5b4217",
+                        "on-tertiary-fixed": "#281900",
+                        "surface-container": "#edeeef",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#44474d",
+                        "tertiary-fixed": "#ffdead",
+                        "surface-tint": "#4e5f7e",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#374765",
+                        "surface": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#031632",
+                        "tertiary-container": "#3c2700",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6ce",
+                        "on-secondary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d7e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-main": "20px",
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "safe-bottom": "env(safe-area-inset-bottom, 20px)"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.4px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "30px", "fontWeight": "600" }],
+                        "body-lg": ["17px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.5px", "fontWeight": "700" }],
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased">
+<!-- TopAppBar (Suppressed navigation intent for linear task, but keeping header for context/back) -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-margin-main py-stack-md bg-surface/90 backdrop-blur-lg">
+<button aria-label="Go back" class="text-on-surface-variant hover:bg-surface-container-low rounded-full p-2 transition-colors tap-highlight-transparent">
+<span class="material-symbols-outlined text-headline-md">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Book Consultation</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-main pb-32 max-w-[600px] mx-auto w-full">
+<!-- Lawyer Summary (Mini Card) -->
+<div class="flex items-center gap-stack-md mb-stack-lg p-stack-md bg-surface-container-lowest rounded-xl border border-surface-variant shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+<div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-surface-container-high relative">
+<img alt="Lawyer Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a distinguished male lawyer in his mid-40s wearing a sharply tailored dark navy blue suit with a crisp white shirt and subtle patterned tie. The background is a slightly blurred, modern corporate law office with bright, natural lighting streaming through large glass windows, creating a high-trust, authoritative yet approachable atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb0MP4ix7O4tkZvpR837cM9y4wH12iq6epT6eQqrCP5Cq5Zla9eciLjLwUWI_r0UsAWn_dA6yWZWVQJi2B6Nsq5uqmgpDcaismLxYYgnvg1ObDZkOuPO5SOGEAsN_GeBd2xp3NB466ZBnsE6Gz77KQ-dKPpJZzkcnqY8KGsqE6kEXpw-bQtqsb1WGFsSPsdBsKRS8Kuecnq8uGT6PWRcVMQKGLB5tPgoYtQPfnoGAH74ov2aqJDMKv0x9R5h2rUL5ikPBRHWdTLosy"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-[#4CAF50] rounded-full border-2 border-surface-container-lowest"></div>
+</div>
+<div>
+<h2 class="font-body-lg text-body-lg font-semibold text-on-surface mb-1">Robert Harrington</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-1">Corporate Law &amp; Contracts</p>
+<div class="flex items-center gap-1 text-on-tertiary-container">
+<span class="material-symbols-outlined icon-fill text-[16px]">star</span>
+<span class="font-label-sm text-label-sm font-semibold">4.9</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-1">(124 Reviews)</span>
+</div>
+</div>
+</div>
+<!-- Date Selection -->
+<section class="mb-stack-lg">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface mb-stack-sm">Select Date</h3>
+<!-- Month Header -->
+<div class="flex justify-between items-center mb-stack-md">
+<span class="font-body-md text-body-md font-medium text-on-surface-variant">October 2023</span>
+<div class="flex gap-2">
+<button class="p-1 text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<!-- Horizontal Date Scroller (iOS Style) -->
+<div class="flex gap-stack-sm overflow-x-auto no-scrollbar pb-2 -mx-margin-main px-margin-main snap-x">
+<!-- Inactive Date -->
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border border-surface-variant bg-surface-container-lowest text-on-surface-variant transition-colors">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider">Mon</span>
+<span class="font-headline-sm text-headline-sm">16</span>
+</button>
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border border-surface-variant bg-surface-container-lowest text-on-surface-variant transition-colors">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider">Tue</span>
+<span class="font-headline-sm text-headline-sm">17</span>
+</button>
+<!-- Active Date -->
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border-2 border-primary bg-primary text-on-primary shadow-[0_4px_12px_rgba(3,22,50,0.15)] transition-all transform scale-105">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider text-primary-fixed">Wed</span>
+<span class="font-headline-sm text-headline-sm">18</span>
+</button>
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border border-surface-variant bg-surface-container-lowest text-on-surface-variant transition-colors">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider">Thu</span>
+<span class="font-headline-sm text-headline-sm">19</span>
+</button>
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border border-surface-variant bg-surface-container-lowest text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider">Fri</span>
+<span class="font-headline-sm text-headline-sm">20</span>
+</button>
+<button class="snap-start flex flex-col items-center justify-center min-w-[64px] h-[80px] rounded-xl border border-surface-variant bg-surface-container-lowest text-on-surface-variant transition-colors">
+<span class="font-label-sm text-label-sm mb-1 uppercase tracking-wider">Sat</span>
+<span class="font-headline-sm text-headline-sm">21</span>
+</button>
+</div>
+</section>
+<!-- Time Selection -->
+<section class="mb-stack-lg">
+<div class="flex justify-between items-end mb-stack-md">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Available Times</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">EST (GMT-4)</span>
+</div>
+<div class="grid grid-cols-3 gap-stack-sm">
+<!-- Morning -->
+<div class="col-span-3 text-label-sm font-semibold text-outline mt-2 mb-1">Morning</div>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">09:00 AM</button>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">09:30 AM</button>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md opacity-40 cursor-not-allowed relative overflow-hidden">
+                    10:00 AM
+                    <div class="absolute inset-0 border-t border-surface-variant transform rotate-[20deg] origin-left w-[120%] top-1/2"></div>
+</button>
+<!-- Afternoon -->
+<div class="col-span-3 text-label-sm font-semibold text-outline mt-4 mb-1">Afternoon</div>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">01:00 PM</button>
+<!-- Active Time -->
+<button class="py-3 rounded-lg border-2 border-secondary bg-secondary-fixed text-on-secondary-container font-body-md text-body-md font-semibold relative">
+                    01:30 PM
+                    <span class="absolute -top-2 -right-2 bg-secondary text-on-secondary rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</span>
+</button>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">02:00 PM</button>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">02:30 PM</button>
+<button class="py-3 rounded-lg border border-surface-variant bg-surface-container-lowest text-on-surface-variant font-body-md text-body-md hover:border-primary-fixed-dim transition-colors">03:00 PM</button>
+</div>
+</section>
+<!-- Session Summary -->
+<section class="bg-surface-container-low rounded-xl p-stack-md mb-stack-lg border border-outline-variant/30">
+<h4 class="font-label-lg text-label-lg text-on-surface-variant mb-3 uppercase tracking-wide">Session Summary</h4>
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5 text-[20px]">calendar_today</span>
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">Wednesday, Oct 18</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">01:30 PM - 02:00 PM (30 min)</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5 text-[20px]">videocam</span>
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">Video Consultation</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Link will be sent via email</p>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30 my-1 w-full"></div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Consultation Fee</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">$150.00</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar (Sticky Checkout Style) -->
+<div class="fixed bottom-0 w-full z-50 bg-surface/90 backdrop-blur-md border-t border-surface-variant pb-safe-bottom pt-stack-md px-margin-main shadow-[0px_-8px_20px_rgba(0,0,0,0.03)] max-w-[600px] left-1/2 -translate-x-1/2">
+<button class="w-full bg-primary text-on-primary font-body-lg text-body-lg font-semibold py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+            Proceed to Payment
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-3 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+            Secure payment via e-Lawyer Escrow
+        </p>
+</div>
+</body></html>

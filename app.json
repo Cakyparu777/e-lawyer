@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "e-Lawyer",
+    "slug": "e-lawyer",
+    "scheme": "elawyer",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "mn.elawyer.app"
+    },
+    "android": {
+      "package": "mn.elawyer.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#031632"
+      }
+    },
+    "plugins": [
+      "expo-notifications",
+      "expo-image-picker",
+      "expo-font"
+    ],
+    "extra": {
+      "apiUrl": "http://localhost:8000/api"
+    }
+  }
+}

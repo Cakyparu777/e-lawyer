@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>e-Lawyer Client Home Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#65a1fe",
+                        "on-tertiary-container": "#ad8d5b",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "secondary": "#055db6",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-fixed-dim": "#e5c18a",
+                        "on-primary-fixed": "#081b38",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#003670",
+                        "primary-fixed-dim": "#b6c7eb",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-container": "#1a2b48",
+                        "secondary-fixed": "#d6e3ff",
+                        "background": "#f8f9fa",
+                        "outline": "#75777e",
+                        "inverse-primary": "#b6c7eb",
+                        "on-primary-container": "#8293b5",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a9c7ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#211400",
+                        "on-tertiary-fixed-variant": "#5b4217",
+                        "on-tertiary-fixed": "#281900",
+                        "surface-container": "#edeeef",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#44474d",
+                        "tertiary-fixed": "#ffdead",
+                        "surface-tint": "#4e5f7e",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#374765",
+                        "surface": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#031632",
+                        "tertiary-container": "#3c2700",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6ce",
+                        "on-secondary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d7e2ff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-main": "20px",
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    fontFamily: {
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-sm": ["20px", { lineHeight: "26px", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["26px", { lineHeight: "32px", letterSpacing: "-0.4px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "30px", fontWeight: "600" }],
+                        "body-lg": ["17px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.1px", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.5px", fontWeight: "700" }],
+                        "body-md": ["15px", { lineHeight: "22px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col font-body-md">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-margin-main py-stack-md bg-surface/90 backdrop-blur-lg border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary">e-Lawyer</span>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant tap-highlight-transparent">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto px-margin-main pt-stack-lg pb-32 max-w-3xl mx-auto w-full">
+<!-- Welcome Section -->
+<section class="mb-stack-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2">Welcome, Jane Doe</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Find the right legal representation for your case.</p>
+<!-- Search Bar -->
+<div class="relative w-full shadow-sm rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-colors">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-transparent border-none focus:ring-0 font-body-lg text-body-lg text-on-surface placeholder-outline rounded-xl" placeholder="Search practice areas, lawyers, or legal topics..." type="text"/>
+</div>
+</section>
+<!-- Legal Practice Areas Section -->
+<section class="mb-stack-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-stack-md">Legal Practice Areas</h2>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Card 1: Civil Law -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">balance</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Civil Law</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Disputes between individuals or organizations, including contracts, property, and torts.</p>
+</div>
+<!-- Card 2: Criminal Defense -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">shield</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Criminal Defense</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Representation for individuals accused of criminal offenses, protecting your rights.</p>
+</div>
+<!-- Card 3: Administrative Law -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">account_balance</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Administrative Law</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dealing with government agencies, regulations, and administrative hearings.</p>
+</div>
+<!-- Card 4: Business / Corporate -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">business</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Business / Corporate</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Legal counsel for corporate entities, mergers, acquisitions, and business compliance.</p>
+</div>
+<!-- Card 5: Family Law -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">family_restroom</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Family Law</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Guidance on domestic relations, divorce, child custody, and adoption matters.</p>
+</div>
+<!-- Card 6: Labor Law -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-start group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-on-secondary-container group-hover:text-on-secondary transition-colors">work</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-1">Labor Law</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Protecting employee rights, workplace disputes, and employment contracts.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-margin-main pb-safe bg-surface/80 backdrop-blur-md shadow-[0px_-4px_12px_rgba(0,0,0,0.05)] rounded-t-xl md:hidden">
+<!-- Active Tab: Home -->
+<button class="flex flex-col items-center justify-center text-secondary font-semibold p-2 scale-95 transition-transform">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<!-- Inactive Tab: Bookings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined mb-1">event_note</span>
+<span class="font-label-sm text-label-sm">Bookings</span>
+</button>
+<!-- Inactive Tab: Alerts -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:opacity-80 transition-opacity relative">
+<span class="material-symbols-outlined mb-1">notifications</span>
+<!-- Notification Badge -->
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+<span class="font-label-sm text-label-sm">Alerts</span>
+</button>
+<!-- Inactive Tab: Profile -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined mb-1">person_apron</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<!-- Desktop Navigation Drawer Sidebar (Hidden on mobile) -->
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-50 flex-col py-stack-lg w-80 bg-surface shadow-lg h-full border-r border-outline-variant rounded-r-xl pt-24">
+<nav class="flex-1 overflow-y-auto px-4 gap-2 flex flex-col">
+<a class="bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 flex items-center gap-stack-md font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 flex items-center gap-stack-md transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">star_half</span>
+                Reviews
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 flex items-center gap-stack-md transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+                My Profile
+            </a>
+</nav>
+</aside>
+</body></html>

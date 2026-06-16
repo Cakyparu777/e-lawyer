@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>e-Lawyer - Civil Law Attorneys</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#65a1fe",
+                        "on-tertiary-container": "#ad8d5b",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "secondary": "#055db6",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-fixed-dim": "#e5c18a",
+                        "on-primary-fixed": "#081b38",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#003670",
+                        "primary-fixed-dim": "#b6c7eb",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-container": "#1a2b48",
+                        "secondary-fixed": "#d6e3ff",
+                        "background": "#f8f9fa",
+                        "outline": "#75777e",
+                        "inverse-primary": "#b6c7eb",
+                        "on-primary-container": "#8293b5",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a9c7ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#211400",
+                        "on-tertiary-fixed-variant": "#5b4217",
+                        "on-tertiary-fixed": "#281900",
+                        "surface-container": "#edeeef",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#44474d",
+                        "tertiary-fixed": "#ffdead",
+                        "surface-tint": "#4e5f7e",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#374765",
+                        "surface": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#031632",
+                        "tertiary-container": "#3c2700",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6ce",
+                        "on-secondary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d7e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-main": "20px",
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.4px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "30px", "fontWeight": "600" }],
+                        "body-lg": ["17px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.5px", "fontWeight": "700" }],
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-sans antialiased min-h-screen flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-margin-main py-stack-md bg-surface/90 backdrop-blur-lg border-b border-outline-variant dark:border-outline">
+<button class="text-on-surface-variant hover:bg-surface-container-low rounded-full p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="text-center flex-1">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Civil Law</h1>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-low rounded-full p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-main py-stack-lg max-w-[600px] w-full mx-auto pb-32">
+<!-- Search Bar -->
+<div class="mb-stack-lg sticky top-[72px] z-30 bg-surface py-2">
+<div class="relative flex items-center w-full h-12 rounded-lg bg-surface-container-low border border-outline-variant focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-all">
+<div class="grid place-items-center h-full w-12 text-on-surface-variant">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="peer h-full w-full outline-none text-body-md font-body-md text-on-surface bg-transparent pr-2 placeholder-on-surface-variant" id="search" placeholder="Search civil lawyers..." type="text"/>
+</div>
+<!-- Active Filters -->
+<div class="flex gap-2 mt-stack-sm overflow-x-auto hide-scrollbar py-1">
+<div class="flex items-center gap-1 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm whitespace-nowrap">
+                    Civil Law
+                    <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-1 px-3 py-1 bg-surface-container-high border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm whitespace-nowrap">
+                    4.5+ Stars
+                </div>
+<div class="flex items-center gap-1 px-3 py-1 bg-surface-container-high border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm whitespace-nowrap">
+                    Under $200/hr
+                </div>
+</div>
+</div>
+<!-- Lawyer List -->
+<div class="flex flex-col gap-stack-md">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm flex flex-col gap-stack-sm active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex gap-stack-md">
+<div class="relative w-16 h-16 shrink-0">
+<img alt="Sarah Jenkins, Esq." class="w-full h-full rounded-full object-cover border-2 border-surface" data-alt="A professional headshot of a confident female attorney in a modern, well-lit corporate office. She is wearing a tailored navy blue blazer over a crisp white blouse. The lighting is soft and bright, reflecting a high-trust, modern institutional aesthetic. The background is slightly blurred showing glass walls and light gray office tones. The mood is approachable yet authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZP8OMa1TaGUzeawWAtEUEoQsMK7IHaQyhTdRfi8FsUBdMngc95jjusAQoMjww26Z79WAaNZsqZBKv0FyrwECdh_1VSbjSK1-hAX6UoDkqfyw-a654CxNTuWs4ap9QaVX2QG9w0h7SvvuL0O-rcmuKlqLOS67hzUZnqBv3By3YaT0wLF1pDf6BLInOpaILE1zCMhBpLcSDZ8-hRdZ5VI3AU0-N76DhUpXph4Dr9Yes_18fChQGzedrHKPRpOszS6je_MqO89oQ1AFi"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-sm text-headline-sm text-primary">Sarah Jenkins, Esq.</h2>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md">
+<span class="material-symbols-outlined fill-icon text-[#FFC107] text-[16px]">star</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">4.9</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Senior Partner at Jenkins &amp; Associates</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Property Law</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Contracts</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Dispute Resolution</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface line-clamp-2 mt-2">Specializing in complex commercial property disputes and contract negotiation with over 15 years of courtroom experience.</p>
+<div class="flex items-center justify-between mt-stack-sm pt-stack-sm border-t border-outline-variant/50">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Consultation</span>
+<span class="font-headline-sm text-headline-sm text-primary">$150 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">/ 30 mins</span></span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-lg text-label-lg hover:bg-primary/90 transition-colors">
+                        Book Now
+                    </button>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm flex flex-col gap-stack-sm active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex gap-stack-md">
+<div class="relative w-16 h-16 shrink-0">
+<img alt="Michael Chang" class="w-full h-full rounded-full object-cover border-2 border-surface" data-alt="A professional headshot of a mature male lawyer in a sharp grey suit with a subtle patterned tie. He is sitting in a sophisticated law library with warm, focused lighting highlighting his face. The atmosphere conveys deep expertise and absolute reliability, fitting a premium corporate legal service aesthetic. The colors are rich but muted, emphasizing high-trust institutional values." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnlTTNYW2WVraO3TZv6k7UI4wtI96O3NAdbV2D2RaeCRccBmFOiaTE5vFTM9caskSQmF_u1qs6zApUa_yflQ5PUgRN3H_3YGSd2XAZYSXwMmBXLH6eHHHUF5Y-QpIREbnk_wVQI6WrCBokdP3dceTFJVTde1P6pfxgsDMgen1HxxO9Y5hVdSH3bZd_F3JdJmvZ_QadQMICdXDU95OM0zMEnBjjHLC62Lu0vJAWLgN-aPSx15FrrS3Z1Dnuvgw4Yb7PSnxpxddhp_Me"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-gray-400 border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-sm text-headline-sm text-primary">Michael Chang, JD</h2>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md">
+<span class="material-symbols-outlined fill-icon text-[#FFC107] text-[16px]">star</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">4.7</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Independent Counsel</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Tort Law</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Personal Injury</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface line-clamp-2 mt-2">Dedicated advocate for civil litigation, focusing on achieving swift resolutions for tort claims and personal injury cases.</p>
+<div class="flex items-center justify-between mt-stack-sm pt-stack-sm border-t border-outline-variant/50">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Consultation</span>
+<span class="font-headline-sm text-headline-sm text-primary">$120 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">/ 30 mins</span></span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-lg text-label-lg hover:bg-primary/90 transition-colors">
+                        Book Now
+                    </button>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm flex flex-col gap-stack-sm active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex gap-stack-md">
+<div class="relative w-16 h-16 shrink-0">
+<img alt="Elena Rodriguez" class="w-full h-full rounded-full object-cover border-2 border-surface" data-alt="A bright, modern portrait of a young female attorney looking directly at the camera with a reassuring smile. She is wearing a professional charcoal blazer. The background is a minimalist, well-lit legal office space with clean lines and subtle blue architectural accents. The lighting is pristine and high-key, aligning perfectly with a modern, secure, and approachable digital legal platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU3eC9-ZGVM40roWnH8AN1mxsxlyDycilh8sFfqz7kKUAHCIiyaDB1Ad8eXaCS-sTJrLil2N9myWDWazNLyeRg-VkLLisTARF6ZoiXrdRy5qdUSXD2uC6BR5NrBCRSLo1kVcqkFGb2yDbY04psF1bm8CSQo3HpdPRG6eD7Znp_e_jkwTjyE49e2qDHxdR8vQQHZtrOuA-5UQ-kW8StC1TVVsg0fy09WilYNpl0KJ72GCcRSdrF2Lsz02MiPCRLbQOKfP4mJQ1X-dQD"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-sm text-headline-sm text-primary">Elena Rodriguez</h2>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md">
+<span class="material-symbols-outlined fill-icon text-[#FFC107] text-[16px]">star</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">5.0</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Managing Partner, Legal Solutions</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Family Law</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm rounded-md border border-outline-variant/50">Estate Planning</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface line-clamp-2 mt-2">Compassionate and thorough representation in family law matters, ensuring long-term security through meticulous estate planning.</p>
+<div class="flex items-center justify-between mt-stack-sm pt-stack-sm border-t border-outline-variant/50">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Consultation</span>
+<span class="font-headline-sm text-headline-sm text-primary">$175 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">/ 30 mins</span></span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-lg text-label-lg hover:bg-primary/90 transition-colors">
+                        Book Now
+                    </button>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-margin-main pb-[env(safe-area-inset-bottom)] pt-2 bg-surface/80 backdrop-blur-md bg-surface dark:bg-inverse-surface shadow-[0px_-4px_12px_rgba(0,0,0,0.05)] md:hidden">
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-container font-semibold w-16 h-14 hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined fill-icon mb-1">home</span>
+<span class="font-label-sm text-[10px] leading-tight">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 w-16 h-14 hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1">event_note</span>
+<span class="font-label-sm text-[10px] leading-tight">Bookings</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 w-16 h-14 hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1">notifications</span>
+<span class="font-label-sm text-[10px] leading-tight">Alerts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 w-16 h-14 hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1">person_apron</span>
+<span class="font-label-sm text-[10px] leading-tight">Profile</span>
+</button>
+</nav>
+</body></html>

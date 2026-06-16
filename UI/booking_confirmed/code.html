@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>e-Lawyer - Booking Confirmed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#f0f1f2",
+                      "on-surface": "#191c1d",
+                      "inverse-surface": "#2e3132",
+                      "surface-bright": "#f8f9fa",
+                      "secondary-container": "#65a1fe",
+                      "on-tertiary-container": "#ad8d5b",
+                      "on-background": "#191c1d",
+                      "on-secondary-fixed": "#001b3d",
+                      "on-error": "#ffffff",
+                      "secondary": "#055db6",
+                      "surface-container-high": "#e7e8e9",
+                      "on-tertiary": "#ffffff",
+                      "surface-variant": "#e1e3e4",
+                      "tertiary-fixed-dim": "#e5c18a",
+                      "on-primary-fixed": "#081b38",
+                      "surface-container-low": "#f3f4f5",
+                      "on-secondary-container": "#003670",
+                      "primary-fixed-dim": "#b6c7eb",
+                      "surface-container-highest": "#e1e3e4",
+                      "primary-container": "#1a2b48",
+                      "secondary-fixed": "#d6e3ff",
+                      "background": "#f8f9fa",
+                      "outline": "#75777e",
+                      "inverse-primary": "#b6c7eb",
+                      "on-primary-container": "#8293b5",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#a9c7ff",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#211400",
+                      "on-tertiary-fixed-variant": "#5b4217",
+                      "on-tertiary-fixed": "#281900",
+                      "surface-container": "#edeeef",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#44474d",
+                      "tertiary-fixed": "#ffdead",
+                      "surface-tint": "#4e5f7e",
+                      "surface-dim": "#d9dadb",
+                      "on-primary-fixed-variant": "#374765",
+                      "surface": "#f8f9fa",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "primary": "#031632",
+                      "tertiary-container": "#3c2700",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#c5c6ce",
+                      "on-secondary-fixed-variant": "#00468c",
+                      "primary-fixed": "#d7e2ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-main": "20px",
+                      "stack-sm": "8px",
+                      "stack-lg": "24px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-sm": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-sm": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.4px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "600"}],
+                      "body-lg": ["17px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.5px", "fontWeight": "700"}],
+                      "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slideUpFade {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-slide-up-1 {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            opacity: 0;
+        }
+        .animate-slide-up-2 {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col items-center justify-center p-margin-main selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<main class="w-full max-w-md flex flex-col items-center text-center">
+<!-- Illustration Area -->
+<div class="mb-stack-lg animate-scale-in">
+<div class="w-40 h-40 rounded-full bg-surface-container-low flex items-center justify-center shadow-sm border border-outline-variant/30 overflow-hidden relative">
+<img alt="Success Checkmark Illustration" class="w-full h-full object-cover mix-blend-multiply opacity-90" data-alt="A clean, modern 3D illustration of a vibrant green checkmark inside a sleek, polished circular badge. The design is minimalist and high-trust, perfectly suited for a premium corporate legal application's success screen. The lighting is soft, studio-quality, and diffused, casting gentle shadows that emphasize the 3D form against a pure white background. The mood is exceptionally calm, positive, and reassuring." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQhzBvbNc2T82JDN3h1l2E5sV2lAPzE3t2RV9w1UPwi50tc2M9-7FB92_IWHaH2XEM5vKFpQhq2nCnp5cn3dMXP6zgoL_fkkIHQ0SB4deHpoyTwOgiTzT6h5VipjbOfGeculIn9twEFoVIGhwe4j7xqx7cI-Os9ZuejG2vnmZh7Aq3z7ZxQPDuYmbZXsG4du0TrLC33a_KLJ09vuCjW1rn9kjh3QGJmoc8jSBXv4myrBmD7A24O96vACpLuNRDvilGpTQFxoQ3hJ8s"/>
+<!-- Fallback/Overlay to ensure icon intent if image is abstract -->
+<div class="absolute inset-0 flex items-center justify-center bg-surface-container-low/20 backdrop-blur-[2px]">
+<span class="material-symbols-outlined text-[80px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Typography Block -->
+<div class="flex flex-col gap-stack-sm mb-stack-lg animate-slide-up-1">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Booking Confirmed!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px] mx-auto leading-relaxed">
+                Your consultation with <span class="font-semibold text-primary">Sarah Jenkins, Esq.</span> is scheduled for <span class="font-semibold text-primary">Oct 24, 10:00 AM</span>.
+            </p>
+</div>
+<!-- Consultation Details Card (Glassmorphism subtle hint) -->
+<div class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-stack-md mb-stack-lg shadow-[0px_4px_12px_rgba(0,0,0,0.02)] animate-slide-up-1 text-left flex items-start gap-stack-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Appointment Type</p>
+<p class="font-body-md text-body-md font-medium text-primary">Initial Corporate Strategy Consultation</p>
+<p class="font-body-sm text-body-sm text-outline mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">videocam</span> Video Call
+                 </p>
+</div>
+</div>
+<!-- Action Buttons Block -->
+<div class="w-full flex flex-col gap-stack-md animate-slide-up-2">
+<button class="w-full bg-primary hover:bg-primary/90 text-on-primary font-label-lg text-label-lg py-4 px-6 rounded-xl transition-all duration-200 shadow-sm flex items-center justify-center gap-2 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">event_upcoming</span>
+                Add to Calendar
+            </button>
+<button class="w-full bg-transparent border border-secondary text-secondary hover:bg-secondary/5 font-label-lg text-label-lg py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98]">
+                View My Appointments
+            </button>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>e-Lawyer - Payment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#65a1fe",
+                        "on-tertiary-container": "#ad8d5b",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "secondary": "#055db6",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-fixed-dim": "#e5c18a",
+                        "on-primary-fixed": "#081b38",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#003670",
+                        "primary-fixed-dim": "#b6c7eb",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-container": "#1a2b48",
+                        "secondary-fixed": "#d6e3ff",
+                        "background": "#f8f9fa",
+                        "outline": "#75777e",
+                        "inverse-primary": "#b6c7eb",
+                        "on-primary-container": "#8293b5",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a9c7ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#211400",
+                        "on-tertiary-fixed-variant": "#5b4217",
+                        "on-tertiary-fixed": "#281900",
+                        "surface-container": "#edeeef",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#44474d",
+                        "tertiary-fixed": "#ffdead",
+                        "surface-tint": "#4e5f7e",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#374765",
+                        "surface": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#031632",
+                        "tertiary-container": "#3c2700",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6ce",
+                        "on-secondary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d7e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-main": "20px",
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.4px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "30px", "fontWeight": "600" }],
+                        "body-lg": ["17px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.5px", "fontWeight": "700" }],
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for better appearance */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e1e3e4;
+            border-radius: 4px;
+        }
+        
+        /* Smooth transitions */
+        .card-select-transition {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-sans selection:bg-secondary-container selection:text-on-secondary-container antialiased">
+<!-- TopAppBar (Suppressed navigation, replacing with functional header) -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-margin-main py-stack-md bg-surface/90 backdrop-blur-lg border-b border-outline-variant">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-low transition-colors tap-highlight-transparent">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Payment</h1>
+<div class="w-10 h-10 flex items-center justify-center">
+<!-- Empty placeholder to maintain centering -->
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center px-margin-main py-stack-lg pb-32">
+<div class="w-full max-w-[600px] flex flex-col gap-stack-lg">
+<!-- Context Header (Optional visual anchor for what is being paid for) -->
+<div class="flex items-center gap-stack-md bg-surface-container-low p-stack-md rounded-xl border border-surface-variant">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined fill">gavel</span>
+</div>
+<div>
+<h2 class="font-body-lg text-body-lg text-on-surface">Legal Consultation</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">With Senior Partner Counselor Name</p>
+</div>
+</div>
+<!-- Price Breakdown Container -->
+<section class="bg-surface rounded-xl border border-surface-variant p-stack-md shadow-sm">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-stack-md">Order Summary</h3>
+<div class="flex flex-col gap-stack-sm font-body-md text-body-md text-on-surface-variant">
+<div class="flex justify-between items-center">
+<span>Consultation Fee</span>
+<span class="text-on-surface">$150.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Service Fee</span>
+<span class="text-on-surface">$5.00</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant my-stack-md w-full"></div>
+<div class="flex justify-between items-center font-headline-sm text-headline-sm text-on-surface">
+<span>Total</span>
+<span>$155.00</span>
+</div>
+</section>
+<!-- Payment Methods Section -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="font-label-lg text-label-lg text-on-surface">Payment Method</h3>
+<!-- Saved Card (Selected) -->
+<button class="card-select-transition w-full flex items-center justify-between p-stack-md rounded-xl border-2 border-secondary bg-surface-container-lowest text-left shadow-sm">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-6 bg-surface-variant rounded flex items-center justify-center">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-bold tracking-wider">VISA</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">•••• •••• •••• 4242</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Expires 12/25</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary fill">radio_button_checked</span>
+</button>
+<!-- Apple Pay (Unselected) -->
+<button class="card-select-transition w-full flex items-center justify-between p-stack-md rounded-xl border border-surface-variant bg-surface hover:bg-surface-container-low text-left">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-6 bg-on-surface rounded flex items-center justify-center">
+<!-- Simplified Apple Pay representation for reliable rendering -->
+<span class="font-label-sm text-[10px] text-surface font-bold tracking-wider">Pay</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Apple Pay</span>
+</div>
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+</button>
+<!-- Add New Card -->
+<button class="w-full flex items-center gap-stack-md p-stack-md rounded-xl border border-dashed border-outline-variant bg-transparent hover:bg-surface-container-lowest text-secondary transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-lg text-label-lg">Add New Card</span>
+</button>
+</section>
+<!-- Security Badge -->
+<div class="flex items-center justify-center gap-unit text-on-surface-variant mt-stack-sm">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="font-label-sm text-label-sm">Payments are secure and encrypted</span>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-md border-t border-surface-variant p-margin-main pb-safe flex justify-center z-50">
+<div class="w-full max-w-[600px]">
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-stack-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-sm">
+<span class="material-symbols-outlined fill text-[20px]">lock</span>
+                Pay $155.00
+            </button>
+</div>
+</div>
+</body></html>
