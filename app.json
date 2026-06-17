@@ -4,6 +4,7 @@
     "slug": "e-lawyer",
     "scheme": "elawyer",
     "version": "0.1.0",
+    "newArchEnabled": true,
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "ios": {
@@ -19,7 +20,8 @@
     "plugins": [
       "expo-notifications",
       "expo-image-picker",
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ],
     "extra": {
       "apiUrl": "http://localhost:8000/api"

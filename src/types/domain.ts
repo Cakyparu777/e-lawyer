@@ -105,5 +105,7 @@ export type ChatThreadSummary = {
   agora_channel_id?: string | null;
   last_message_at: string;
   latest_message?: ChatMessage | null;
+  lawyer_contact_snapshot: Record<string, string>;
+  client_contact_snapshot: Record<string, string>;
   appointment: Appointment;
 };

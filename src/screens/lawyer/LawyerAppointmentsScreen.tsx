@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, View } from "react-native";
-import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import type { NativeBottomTabScreenProps } from "@react-navigation/bottom-tabs/unstable";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { apiFetch } from "@/api/client";
@@ -15,7 +15,7 @@ import type { Appointment } from "@/types/domain";
 import type { LawyerStackParamList, LawyerTabParamList } from "@/navigation/types";
 
 type Props = CompositeScreenProps<
-  BottomTabScreenProps<LawyerTabParamList, "LawyerAppointments">,
+  NativeBottomTabScreenProps<LawyerTabParamList, "LawyerAppointments">,
   NativeStackScreenProps<LawyerStackParamList>
 >;
 

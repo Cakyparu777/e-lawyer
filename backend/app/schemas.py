@@ -195,6 +195,8 @@ class ChatThreadSummary(BaseModel):
     agora_channel_id: str | None
     last_message_at: datetime
     latest_message: ChatMessageOut | None = None
+    lawyer_contact_snapshot: dict[str, str]
+    client_contact_snapshot: dict[str, str]
     appointment: AppointmentOut
 
     model_config = {"from_attributes": True}

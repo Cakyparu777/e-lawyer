@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { BackButton } from "@/components/BackButton";
 import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
+import { GlassSurface } from "@/components/GlassSurface";
 import { Screen } from "@/components/Screen";
 import { Text } from "@/components/Text";
 import { useChatThread, useSendChatMessage } from "@/api/queries";
@@ -127,7 +128,7 @@ export function ChatScreen({ route, navigation }: Props) {
           })}
         </ScrollView>
 
-        <View style={styles.inputRow}>
+        <GlassSurface style={styles.inputRow} intensity={38}>
           <TextInput
             value={text}
             onChangeText={setText}
@@ -145,7 +146,7 @@ export function ChatScreen({ route, navigation }: Props) {
           >
             <Ionicons name="send" size={18} color={colors.onPrimary} />
           </Pressable>
-        </View>
+        </GlassSurface>
       </KeyboardAvoidingView>
     </Screen>
   );
@@ -171,9 +172,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     alignItems: "flex-end",
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: colors.outlineVariant
+    padding: 10,
+    borderRadius: 22,
+    marginTop: 8
   },
   input: {
     flex: 1,

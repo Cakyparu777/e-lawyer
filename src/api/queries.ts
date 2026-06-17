@@ -1,6 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/api/client";
-import type { Appointment, AuthResponse, Category, ChatMessage, ChatThread, CheckoutResponse, Lawyer, Review } from "@/types/domain";
+import type {
+  Appointment,
+  AuthResponse,
+  Category,
+  ChatMessage,
+  ChatThread,
+  ChatThreadSummary,
+  CheckoutResponse,
+  Lawyer,
+  Review
+} from "@/types/domain";
 
 export function useCategories() {
   return useQuery({ queryKey: ["categories"], queryFn: () => apiFetch<Category[]>("/categories") });
@@ -36,6 +46,14 @@ export function useChatThread(appointmentId: string) {
     queryFn: () => apiFetch<ChatThread>(`/chats/appointments/${appointmentId}`),
     enabled: Boolean(appointmentId),
     refetchInterval: 5000
+  });
+}
+
+export function useChatThreads() {
+  return useQuery({
+    queryKey: ["chat", "threads"],
+    queryFn: () => apiFetch<ChatThreadSummary[]>("/chats"),
+    refetchInterval: 8000
   });
 }
 

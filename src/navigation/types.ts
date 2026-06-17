@@ -9,6 +9,7 @@ export type AuthStackParamList = {
 
 export type ClientStackParamList = {
   ClientTabs: NavigatorScreenParams<ClientTabParamList> | undefined;
+  ClientAppointments: undefined;
   LawyerDirectory: { categoryId: string; categoryName: string };
   LawyerProfile: { lawyerId: string; categoryId?: string };
   BookConsultation: { lawyerId: string; categoryId: string };
@@ -20,13 +21,16 @@ export type ClientStackParamList = {
 
 export type ClientTabParamList = {
   ClientHome: undefined;
-  ClientAppointments: undefined;
-  ClientSettings: undefined;
+  ClientSearch: undefined;
+  ClientQuickBook: undefined;
+  ClientChats: undefined;
+  ClientProfile: undefined;
 };
 
 export type LawyerTabParamList = {
   LawyerDashboard: undefined;
   LawyerAppointments: undefined;
+  LawyerChats: undefined;
   LawyerReviews: undefined;
   LawyerProfileEditor: undefined;
 };

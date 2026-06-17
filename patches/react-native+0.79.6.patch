@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native/scripts/codegen/generate-artifacts-executor.js b/node_modules/react-native/scripts/codegen/generate-artifacts-executor.js
+index c831166..a9569cf 100644
+--- a/node_modules/react-native/scripts/codegen/generate-artifacts-executor.js
++++ b/node_modules/react-native/scripts/codegen/generate-artifacts-executor.js
+@@ -884,7 +884,7 @@ function findRCTComponentViewProtocolClass(filepath) {
+     // return what's between return and `.class`
+     const lines = fileContent.split('\n');
+     const signatureIndex = lines.findIndex(line => regex.test(line));
+-    const returnRegex = /return (.*)\.class/;
++    const returnRegex = /return (.*?)\.class/;
+     const classNameMatch = String(lines.slice(signatureIndex)).match(
+       returnRegex,
+     );

@@ -1,0 +1,25 @@
+diff --git a/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js b/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
+index 38b962f..701462a 100644
+--- a/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
++++ b/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
+@@ -284,6 +284,7 @@ export function NativeBottomTabView({
+           onDidDisappear: () => onTransitionEnd({
+             closing: true,
+             route
+           }),
++          isFocused: isFocused,
+           screenKey: route.key,
+           preventNativeSelection: tabBarSelectionEnabled === false,
+           badgeValue: tabBarBadge?.toString(),
+diff --git a/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx b/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
+index 8180ecb..bbaed31 100644
+--- a/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
++++ b/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
+@@ -419,6 +419,7 @@ export function NativeBottomTabView({ state, navigation, descriptors }: Props) {
+               onDidAppear={() => onTransitionEnd({ closing: false, route })}
+               onDidDisappear={() => onTransitionEnd({ closing: true, route })}
+               key={route.key}
++              isFocused={isFocused}
+               screenKey={route.key}
+               preventNativeSelection={tabBarSelectionEnabled === false}
+               badgeValue={tabBarBadge?.toString()}

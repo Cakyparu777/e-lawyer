@@ -54,6 +54,15 @@ def _build_thread_out(db: DbSession, thread: ChatThread) -> ChatThreadOut:
 
 @router.get("", response_model=list[ChatThreadSummary])
 def list_chat_threads(db: DbSession, current_user: CurrentUser) -> list[ChatThreadSummary]:
+    appointment_stmt = select(Appointment).where(
+        or_(Appointment.client_id == current_user.id, Appointment.lawyer_id == current_user.id)
+    )
+    for appointment in db.scalars(appointment_stmt).all():
+        payment = db.get(Payment, appointment.payment_id) if appointment.payment_id else None
+        if payment and payment.status == PaymentStatus.SUCCEEDED:
+            chat_service.ensure_thread_for_paid_appointment(db, appointment)
+    db.commit()
+
     threads = db.scalars(
         select(ChatThread)
         .where(or_(ChatThread.client_id == current_user.id, ChatThread.lawyer_id == current_user.id))
@@ -63,6 +72,10 @@ def list_chat_threads(db: DbSession, current_user: CurrentUser) -> list[ChatThre
     for thread in threads:
         appointment = db.get(Appointment, thread.appointment_id)
         if not appointment:
+            continue
+        lawyer = db.get(User, thread.lawyer_id)
+        client = db.get(User, thread.client_id)
+        if not lawyer or not client:
             continue
         latest = db.scalar(
             select(ChatMessage).where(ChatMessage.thread_id == thread.id).order_by(desc(ChatMessage.created_at))
@@ -76,6 +89,8 @@ def list_chat_threads(db: DbSession, current_user: CurrentUser) -> list[ChatThre
                 agora_channel_id=thread.agora_channel_id,
                 last_message_at=thread.last_message_at,
                 latest_message=ChatMessageOut.model_validate(latest) if latest else None,
+                lawyer_contact_snapshot=_contact_snapshot(lawyer),
+                client_contact_snapshot=appointment.client_contact_snapshot or _contact_snapshot(client),
                 appointment=AppointmentOut.model_validate(appointment),
             )
         )

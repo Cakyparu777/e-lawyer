@@ -1,5 +1,3 @@
-import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StyleSheet, View } from "react-native";
 import { Button } from "@/components/Button";
@@ -11,12 +9,9 @@ import { Text } from "@/components/Text";
 import { useAppointments } from "@/api/queries";
 import { colors } from "@/theme/colors";
 import type { Appointment } from "@/types/domain";
-import type { ClientStackParamList, ClientTabParamList } from "@/navigation/types";
+import type { ClientStackParamList } from "@/navigation/types";
 
-type Props = CompositeScreenProps<
-  BottomTabScreenProps<ClientTabParamList, "ClientAppointments">,
-  NativeStackScreenProps<ClientStackParamList>
->;
+type Props = NativeStackScreenProps<ClientStackParamList, "ClientAppointments">;
 
 export function ClientAppointmentsScreen({ navigation }: Props) {
   const appointments = useAppointments();

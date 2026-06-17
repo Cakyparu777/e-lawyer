@@ -92,7 +92,7 @@ configure_expo_node() {
 
   local major
   major="$(node -p 'Number(process.versions.node.split(".")[0])')"
-  if (( major >= 20 && major < 23 )); then
+  if (( major >= 20 )); then
     EXPO_NODE_CMD=("node")
     return 0
   fi

@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeBottomTabNavigator, type NativeBottomTabIcon, type NativeBottomTabNavigationOptions } from "@react-navigation/bottom-tabs/unstable";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
+import type { SFSymbol } from "sf-symbols-typescript";
 import { colors } from "@/theme/colors";
 import { useAuthStore } from "@/state/authStore";
 import type {
@@ -19,6 +19,8 @@ import { LoginScreen } from "@/screens/auth/LoginScreen";
 import { RegisterScreen } from "@/screens/auth/RegisterScreen";
 import { OtpScreen } from "@/screens/auth/OtpScreen";
 import { ClientHomeScreen } from "@/screens/client/ClientHomeScreen";
+import { ClientSearchScreen } from "@/screens/client/ClientSearchScreen";
+import { ClientQuickBookScreen } from "@/screens/client/ClientQuickBookScreen";
 import { LawyerDirectoryScreen } from "@/screens/client/LawyerDirectoryScreen";
 import { LawyerProfileScreen } from "@/screens/client/LawyerProfileScreen";
 import { BookConsultationScreen } from "@/screens/client/BookConsultationScreen";
@@ -33,42 +35,66 @@ import { LawyerReviewsScreen } from "@/screens/lawyer/LawyerReviewsScreen";
 import { LawyerProfileEditorScreen } from "@/screens/lawyer/LawyerProfileEditorScreen";
 import { AdminHomeScreen } from "@/screens/admin/AdminHomeScreen";
 import { ChatScreen } from "@/screens/chat/ChatScreen";
+import { ChatListScreen } from "@/screens/chat/ChatListScreen";
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const ClientStack = createNativeStackNavigator<ClientStackParamList>();
-const ClientTabs = createBottomTabNavigator<ClientTabParamList>();
+const ClientTabs = createNativeBottomTabNavigator<ClientTabParamList>();
 const LawyerStack = createNativeStackNavigator<LawyerStackParamList>();
-const LawyerTabs = createBottomTabNavigator<LawyerTabParamList>();
+const LawyerTabs = createNativeBottomTabNavigator<LawyerTabParamList>();
 const AdminStack = createNativeStackNavigator<AdminStackParamList>();
 
-function tabOptions(icon: keyof typeof Ionicons.glyphMap) {
+function sfSymbol(name: SFSymbol): NativeBottomTabIcon {
+  return { type: "sfSymbol" as const, name };
+}
+
+function tabOptions(label: string, icon: SFSymbol, selectedIcon: SFSymbol = icon): NativeBottomTabNavigationOptions {
   return {
-    tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-      <Ionicons name={icon} size={size} color={color} />
-    )
+    title: label,
+    tabBarLabel: label,
+    tabBarIcon: ({ focused }: { focused: boolean }) => sfSymbol(focused ? selectedIcon : icon)
+  };
+}
+
+function tabScreenOptions(): NativeBottomTabNavigationOptions {
+  return {
+    headerShown: false,
+    tabBarActiveTintColor: colors.primary,
+    tabBarControllerMode: "tabBar" as const,
+    tabBarMinimizeBehavior: "none" as const,
+    overrideScrollViewContentInsetAdjustmentBehavior: true
   };
 }
 
 function ClientTabNavigator() {
   return (
     <ClientTabs.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: colors.secondary,
-        tabBarInactiveTintColor: colors.onSurfaceVariant,
-        tabBarStyle: { backgroundColor: colors.surfaceContainerLowest, borderTopColor: colors.outlineVariant }
-      }}
+      screenOptions={tabScreenOptions}
     >
-      <ClientTabs.Screen name="ClientHome" component={ClientHomeScreen} options={{ title: "Нүүр", ...tabOptions("home") }} />
       <ClientTabs.Screen
-        name="ClientAppointments"
-        component={ClientAppointmentsScreen}
-        options={{ title: "Захиалга", ...tabOptions("calendar") }}
+        name="ClientHome"
+        component={ClientHomeScreen}
+        options={tabOptions("Нүүр", "house", "house.fill")}
       />
       <ClientTabs.Screen
-        name="ClientSettings"
+        name="ClientSearch"
+        component={ClientSearchScreen}
+        options={tabOptions("Хайх", "magnifyingglass")}
+      />
+      <ClientTabs.Screen
+        name="ClientQuickBook"
+        component={ClientQuickBookScreen}
+        options={tabOptions("Захиалах", "plus.circle", "plus.circle.fill")}
+      />
+      <ClientTabs.Screen
+        name="ClientChats"
+        component={ChatListScreen}
+        options={tabOptions("Чат", "bubble.left.and.bubble.right", "bubble.left.and.bubble.right.fill")}
+      />
+      <ClientTabs.Screen
+        name="ClientProfile"
         component={ClientSettingsScreen}
-        options={{ title: "Тохиргоо", ...tabOptions("person-circle") }}
+        options={tabOptions("Профайл", "person.crop.circle", "person.crop.circle.fill")}
       />
     </ClientTabs.Navigator>
   );
@@ -78,6 +104,7 @@ function ClientNavigator() {
   return (
     <ClientStack.Navigator screenOptions={{ headerShown: false }}>
       <ClientStack.Screen name="ClientTabs" component={ClientTabNavigator} />
+      <ClientStack.Screen name="ClientAppointments" component={ClientAppointmentsScreen} />
       <ClientStack.Screen name="LawyerDirectory" component={LawyerDirectoryScreen} />
       <ClientStack.Screen name="LawyerProfile" component={LawyerProfileScreen} />
       <ClientStack.Screen name="BookConsultation" component={BookConsultationScreen} />
@@ -92,32 +119,32 @@ function ClientNavigator() {
 function LawyerTabNavigator() {
   return (
     <LawyerTabs.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: colors.secondary,
-        tabBarInactiveTintColor: colors.onSurfaceVariant,
-        tabBarStyle: { backgroundColor: colors.surfaceContainerLowest, borderTopColor: colors.outlineVariant }
-      }}
+      screenOptions={tabScreenOptions}
     >
       <LawyerTabs.Screen
         name="LawyerDashboard"
         component={LawyerDashboardScreen}
-        options={{ title: "Хянах самбар", ...tabOptions("grid") }}
+        options={tabOptions("Самбар", "square.grid.2x2", "square.grid.2x2.fill")}
       />
       <LawyerTabs.Screen
         name="LawyerAppointments"
         component={LawyerAppointmentsScreen}
-        options={{ title: "Хуваарь", ...tabOptions("calendar") }}
+        options={tabOptions("Хуваарь", "calendar")}
+      />
+      <LawyerTabs.Screen
+        name="LawyerChats"
+        component={ChatListScreen}
+        options={tabOptions("Чат", "bubble.left.and.bubble.right", "bubble.left.and.bubble.right.fill")}
       />
       <LawyerTabs.Screen
         name="LawyerReviews"
         component={LawyerReviewsScreen}
-        options={{ title: "Үнэлгээ", ...tabOptions("star-half") }}
+        options={tabOptions("Үнэлгээ", "star", "star.fill")}
       />
       <LawyerTabs.Screen
         name="LawyerProfileEditor"
         component={LawyerProfileEditorScreen}
-        options={{ title: "Профайл", ...tabOptions("person-circle") }}
+        options={tabOptions("Профайл", "person.crop.circle", "person.crop.circle.fill")}
       />
     </LawyerTabs.Navigator>
   );
