@@ -1,25 +1,26 @@
 import type { PropsWithChildren } from "react";
-import { Platform, StyleSheet, View, ViewStyle } from "react-native";
+import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from "react-native";
 import { BlurView } from "expo-blur";
 import { colors } from "@/theme/colors";
 
 type Props = PropsWithChildren<{
-  style?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
   intensity?: number;
   tint?: "light" | "dark" | "default";
 }>;
 
-export function GlassSurface({ children, style, intensity = 34, tint = "light" }: Props) {
+export function GlassSurface({ children, style, contentStyle, intensity = 34, tint = "light" }: Props) {
   if (Platform.OS === "ios") {
     return (
       <BlurView intensity={intensity} tint={tint} style={[styles.base, style]}>
         <View pointerEvents="none" style={styles.liquidTint} />
-        <View style={styles.content}>{children}</View>
+        <View style={[styles.content, contentStyle]}>{children}</View>
       </BlurView>
     );
   }
 
-  return <View style={[styles.base, styles.fallback, style]}>{children}</View>;
+  return <View style={[styles.base, styles.fallback, style, contentStyle]}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.76)"
   },
   content: {
-    flex: 1,
     backgroundColor: "transparent"
   },
   fallback: {

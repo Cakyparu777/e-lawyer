@@ -36,7 +36,12 @@ export function ChatListScreen({ navigation }: Props) {
 
       <View style={styles.list}>
         {chats.data?.map((item: ChatThreadSummary) => (
-          <Pressable key={item.id} onPress={() => navigation.navigate("Chat", { appointmentId: item.appointment_id })}>
+          <Pressable
+            key={item.id}
+            accessibilityRole="button"
+            accessibilityLabel={`${peerName(item)}-тэй чат нээх`}
+            onPress={() => navigation.navigate("Chat", { appointmentId: item.appointment_id })}
+          >
             <Card style={styles.card}>
               <View style={styles.top}>
                 <View style={styles.avatar}>

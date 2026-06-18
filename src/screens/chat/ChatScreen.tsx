@@ -78,7 +78,7 @@ export function ChatScreen({ route, navigation }: Props) {
   }
 
   return (
-    <Screen scroll={false}>
+    <Screen scroll={false} contentStyle={styles.screenContent}>
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={styles.wrap}>
         <View style={styles.header}>
           <BackButton onPress={navigation.goBack} />
@@ -128,7 +128,7 @@ export function ChatScreen({ route, navigation }: Props) {
           })}
         </ScrollView>
 
-        <GlassSurface style={styles.inputRow} intensity={38}>
+        <GlassSurface style={styles.inputRow} contentStyle={styles.inputContent} intensity={38}>
           <TextInput
             value={text}
             onChangeText={setText}
@@ -153,6 +153,7 @@ export function ChatScreen({ route, navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
+  screenContent: { paddingBottom: 8 },
   wrap: { flex: 1 },
   header: { flexDirection: "row", gap: 4, alignItems: "flex-start" },
   headerText: { flex: 1 },
@@ -169,18 +170,20 @@ const styles = StyleSheet.create({
   mine: { alignSelf: "flex-end", backgroundColor: colors.primary },
   theirs: { alignSelf: "flex-start", backgroundColor: colors.surfaceContainerLow },
   inputRow: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "flex-end",
-    padding: 10,
-    borderRadius: 22,
+    borderRadius: 24,
     marginTop: 8
+  },
+  inputContent: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "flex-end",
+    padding: 6
   },
   input: {
     flex: 1,
-    minHeight: 46,
+    minHeight: 44,
     maxHeight: 120,
-    borderRadius: 12,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.outlineVariant,
     backgroundColor: colors.surfaceContainerLowest,
@@ -189,9 +192,9 @@ const styles = StyleSheet.create({
     color: colors.onSurface
   },
   sendButton: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.primary

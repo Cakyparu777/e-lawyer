@@ -1,9 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeBottomTabNavigator, type NativeBottomTabIcon, type NativeBottomTabNavigationOptions } from "@react-navigation/bottom-tabs/unstable";
+import {
+  createNativeBottomTabNavigator,
+  type NativeBottomTabIcon,
+  type NativeBottomTabNavigationOptions
+} from "@react-navigation/bottom-tabs/unstable";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type { SFSymbol } from "sf-symbols-typescript";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
-import type { SFSymbol } from "sf-symbols-typescript";
 import { colors } from "@/theme/colors";
 import { useAuthStore } from "@/state/authStore";
 import type {
@@ -44,15 +48,16 @@ const LawyerStack = createNativeStackNavigator<LawyerStackParamList>();
 const LawyerTabs = createNativeBottomTabNavigator<LawyerTabParamList>();
 const AdminStack = createNativeStackNavigator<AdminStackParamList>();
 
-function sfSymbol(name: SFSymbol): NativeBottomTabIcon {
-  return { type: "sfSymbol" as const, name };
-}
+function tabOptions(
+  label: string,
+  symbol: SFSymbol
+): NativeBottomTabNavigationOptions {
+  const icon: NativeBottomTabIcon = { type: "sfSymbol", name: symbol };
 
-function tabOptions(label: string, icon: SFSymbol, selectedIcon: SFSymbol = icon): NativeBottomTabNavigationOptions {
   return {
     title: label,
     tabBarLabel: label,
-    tabBarIcon: ({ focused }: { focused: boolean }) => sfSymbol(focused ? selectedIcon : icon)
+    tabBarIcon: icon
   };
 }
 
@@ -74,7 +79,7 @@ function ClientTabNavigator() {
       <ClientTabs.Screen
         name="ClientHome"
         component={ClientHomeScreen}
-        options={tabOptions("Нүүр", "house", "house.fill")}
+        options={tabOptions("Нүүр", "house")}
       />
       <ClientTabs.Screen
         name="ClientSearch"
@@ -84,17 +89,17 @@ function ClientTabNavigator() {
       <ClientTabs.Screen
         name="ClientQuickBook"
         component={ClientQuickBookScreen}
-        options={tabOptions("Захиалах", "plus.circle", "plus.circle.fill")}
+        options={tabOptions("Захиалах", "calendar.badge.plus")}
       />
       <ClientTabs.Screen
         name="ClientChats"
         component={ChatListScreen}
-        options={tabOptions("Чат", "bubble.left.and.bubble.right", "bubble.left.and.bubble.right.fill")}
+        options={tabOptions("Чат", "message")}
       />
       <ClientTabs.Screen
         name="ClientProfile"
         component={ClientSettingsScreen}
-        options={tabOptions("Профайл", "person.crop.circle", "person.crop.circle.fill")}
+        options={tabOptions("Профайл", "person.crop.circle")}
       />
     </ClientTabs.Navigator>
   );
@@ -124,7 +129,7 @@ function LawyerTabNavigator() {
       <LawyerTabs.Screen
         name="LawyerDashboard"
         component={LawyerDashboardScreen}
-        options={tabOptions("Самбар", "square.grid.2x2", "square.grid.2x2.fill")}
+        options={tabOptions("Самбар", "square.grid.2x2")}
       />
       <LawyerTabs.Screen
         name="LawyerAppointments"
@@ -134,17 +139,17 @@ function LawyerTabNavigator() {
       <LawyerTabs.Screen
         name="LawyerChats"
         component={ChatListScreen}
-        options={tabOptions("Чат", "bubble.left.and.bubble.right", "bubble.left.and.bubble.right.fill")}
+        options={tabOptions("Чат", "message")}
       />
       <LawyerTabs.Screen
         name="LawyerReviews"
         component={LawyerReviewsScreen}
-        options={tabOptions("Үнэлгээ", "star", "star.fill")}
+        options={tabOptions("Үнэлгээ", "star")}
       />
       <LawyerTabs.Screen
         name="LawyerProfileEditor"
         component={LawyerProfileEditorScreen}
-        options={tabOptions("Профайл", "person.crop.circle", "person.crop.circle.fill")}
+        options={tabOptions("Профайл", "person.crop.circle")}
       />
     </LawyerTabs.Navigator>
   );

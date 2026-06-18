@@ -1,25 +1,83 @@
 diff --git a/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js b/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
-index 38b962f..701462a 100644
+index 38b962f..8efc9fd 100644
 --- a/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
 +++ b/node_modules/@react-navigation/bottom-tabs/lib/module/unstable/NativeBottomTabView.native.js
-@@ -284,6 +284,7 @@ export function NativeBottomTabView({
-           onDidDisappear: () => onTransitionEnd({
+@@ -269,6 +269,20 @@ export function NativeBottomTabView({
+         const selectedIcon = typeof tabBarIcon === 'function' ? getPlatformIcon(tabBarIcon({
+           focused: true
+         })) : undefined;
++        const iosTabAppearance = {
++          tabBarBackgroundColor,
++          tabBarShadowColor,
++          tabBarBlurEffect,
++          stacked: {
++            normal: tabItemAppearance
++          },
++          inline: {
++            normal: tabItemAppearance
++          },
++          compactInline: {
++            normal: tabItemAppearance
++          }
++        };
+         return /*#__PURE__*/_jsx(Tabs.Screen, {
+           onWillDisappear: () => onTransitionStart({
+             closing: true,
+@@ -284,7 +298,16 @@ export function NativeBottomTabView({
              closing: true,
              route
            }),
 +          isFocused: isFocused,
++          tabKey: route.key,
            screenKey: route.key,
++          icon: icon,
++          systemItem: tabBarSystemItem,
++          scrollEdgeAppearance: iosTabAppearance,
++          standardAppearance: iosTabAppearance,
++          overrideScrollViewContentInsetAdjustmentBehavior: overrideScrollViewContentInsetAdjustmentBehavior,
            preventNativeSelection: tabBarSelectionEnabled === false,
            badgeValue: tabBarBadge?.toString(),
+           title: tabTitle,
 diff --git a/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx b/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
-index 8180ecb..bbaed31 100644
+index 8180ecb..38dfd7a 100644
 --- a/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
 +++ b/node_modules/@react-navigation/bottom-tabs/src/unstable/NativeBottomTabView.native.tsx
-@@ -419,6 +419,7 @@ export function NativeBottomTabView({ state, navigation, descriptors }: Props) {
+@@ -410,6 +410,21 @@ export function NativeBottomTabView({ state, navigation, descriptors }: Props) {
+               ? getPlatformIcon(tabBarIcon({ focused: true }))
+               : undefined;
+ 
++          const iosTabAppearance = {
++            tabBarBackgroundColor,
++            tabBarShadowColor,
++            tabBarBlurEffect,
++            stacked: {
++              normal: tabItemAppearance,
++            },
++            inline: {
++              normal: tabItemAppearance,
++            },
++            compactInline: {
++              normal: tabItemAppearance,
++            },
++          };
++
+           return (
+             <Tabs.Screen
+               onWillDisappear={() =>
+@@ -419,7 +434,18 @@ export function NativeBottomTabView({ state, navigation, descriptors }: Props) {
                onDidAppear={() => onTransitionEnd({ closing: false, route })}
                onDidDisappear={() => onTransitionEnd({ closing: true, route })}
                key={route.key}
 +              isFocused={isFocused}
++              tabKey={route.key}
                screenKey={route.key}
++              icon={icon}
++              systemItem={tabBarSystemItem}
++              scrollEdgeAppearance={iosTabAppearance}
++              standardAppearance={iosTabAppearance}
++              overrideScrollViewContentInsetAdjustmentBehavior={
++                overrideScrollViewContentInsetAdjustmentBehavior
++              }
                preventNativeSelection={tabBarSelectionEnabled === false}
                badgeValue={tabBarBadge?.toString()}
+               title={tabTitle}
