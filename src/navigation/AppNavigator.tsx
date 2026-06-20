@@ -18,7 +18,6 @@ import type {
   LawyerStackParamList,
   LawyerTabParamList
 } from "@/navigation/types";
-import { OnboardingScreen } from "@/screens/auth/OnboardingScreen";
 import { LoginScreen } from "@/screens/auth/LoginScreen";
 import { RegisterScreen } from "@/screens/auth/RegisterScreen";
 import { OtpScreen } from "@/screens/auth/OtpScreen";
@@ -167,7 +166,6 @@ function LawyerNavigator() {
 function AuthNavigator() {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen name="Onboarding" component={OnboardingScreen} />
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Register" component={RegisterScreen} />
       <AuthStack.Screen name="Otp" component={OtpScreen} />

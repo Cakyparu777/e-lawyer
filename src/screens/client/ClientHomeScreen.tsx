@@ -4,6 +4,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { NativeBottomTabScreenProps } from "@react-navigation/bottom-tabs/unstable";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
 import { Screen } from "@/components/Screen";
@@ -48,13 +49,16 @@ export function ClientHomeScreen({ navigation }: Props) {
   return (
     <Screen>
       <View style={styles.appBar}>
-        <View>
-          <Text variant="caption" color={colors.onSurfaceVariant}>
-            e-Lawyer
-          </Text>
-          <Text variant="title" color={colors.primary}>
-            Сайн байна уу, {user?.username || "Үйлчлүүлэгч"}
-          </Text>
+        <View style={styles.brandHeader}>
+          <BrandLogo size={44} />
+          <View>
+            <Text variant="caption" color={colors.onSurfaceVariant}>
+              e-Lawyer
+            </Text>
+            <Text variant="title" color={colors.primary}>
+              Сайн байна уу, {user?.username || "Үйлчлүүлэгч"}
+            </Text>
+          </View>
         </View>
         <Pressable style={styles.iconButton}>
           <Ionicons name="notifications-outline" size={21} color={colors.onSurfaceVariant} />
@@ -63,9 +67,7 @@ export function ClientHomeScreen({ navigation }: Props) {
       </View>
 
       <Card style={styles.heroCard}>
-        <View style={styles.heroIcon}>
-          <Ionicons name="shield-checkmark" size={24} color={colors.onSecondaryContainer} />
-        </View>
+        <BrandLogo size={72} style={styles.heroLogo} />
         <Text variant="headline" color={colors.primary}>
           Итгэлтэй хууль зүйн зөвлөгөө аваарай
         </Text>
@@ -148,6 +150,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 18
   },
+  brandHeader: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingRight: 12
+  },
   iconButton: {
     width: 44,
     height: 44,
@@ -173,13 +182,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: colors.surfaceContainerLowest
   },
-  heroIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.secondaryContainer,
-    alignItems: "center",
-    justifyContent: "center",
+  heroLogo: {
+    borderRadius: 18,
     marginBottom: 2
   },
   searchWrap: {

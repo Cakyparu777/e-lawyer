@@ -1,6 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/Button";
 import { Screen } from "@/components/Screen";
 import { Text } from "@/components/Text";
@@ -14,9 +15,7 @@ export function OnboardingScreen({ navigation }: Props) {
     <Screen>
       <View style={styles.container}>
         <View style={styles.brandRow}>
-          <View style={styles.brandMark}>
-            <Ionicons name="shield-checkmark" size={20} color={colors.onPrimary} />
-          </View>
+          <BrandLogo size={38} />
           <Text variant="title" color={colors.primary}>
             e-Lawyer
           </Text>
@@ -34,9 +33,7 @@ export function OnboardingScreen({ navigation }: Props) {
           </View>
 
           <View style={styles.visualCenter}>
-            <View style={styles.gavelCircle}>
-              <Ionicons name="hammer" size={48} color={colors.onPrimary} />
-            </View>
+            <BrandLogo size={144} style={styles.heroLogo} />
             <View style={styles.trustRow}>
               <View style={styles.trustPill}>
                 <Ionicons name="star" size={14} color={colors.star} />
@@ -109,14 +106,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10
   },
-  brandMark: {
-    width: 38,
-    height: 38,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center"
-  },
   visualPanel: {
     minHeight: 330,
     borderRadius: 28,
@@ -150,13 +139,8 @@ const styles = StyleSheet.create({
     gap: 22,
     paddingBottom: 10
   },
-  gavelCircle: {
-    width: 144,
-    height: 144,
-    borderRadius: 72,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
+  heroLogo: {
+    borderRadius: 36,
     shadowColor: colors.primary,
     shadowOpacity: 0.22,
     shadowOffset: { width: 0, height: 14 },

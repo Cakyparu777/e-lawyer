@@ -4,9 +4,15 @@
     "slug": "e-lawyer",
     "scheme": "elawyer",
     "version": "0.1.0",
+    "icon": "./assets/logo.png",
     "newArchEnabled": true,
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/logo-lockup.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#031632"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.elawyer.app"
@@ -14,6 +20,7 @@
     "android": {
       "package": "mn.elawyer.app",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#031632"
       }
     },

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/Button";
 import { Screen } from "@/components/Screen";
 import { Text } from "@/components/Text";
 import { TextField } from "@/components/TextField";
-import { BackButton } from "@/components/BackButton";
 import { useLogin } from "@/api/queries";
 import { useAuthStore } from "@/state/authStore";
 import { colors } from "@/theme/colors";
@@ -37,16 +36,8 @@ export function LoginScreen({ navigation }: Props) {
   return (
     <Screen>
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={styles.wrap}>
-        <View style={styles.topRow}>
-          <BackButton onPress={() => navigation.goBack()} />
-        </View>
-
         <View style={styles.brandBlock}>
-          <View style={styles.logoShadow}>
-            <View style={styles.logo}>
-              <Ionicons name="shield-checkmark" size={30} color={colors.onPrimary} />
-            </View>
-          </View>
+          <BrandLogo size={72} style={styles.logoShadow} />
           <Text variant="headline" color={colors.primary} style={styles.centerText}>
             Тавтай морил
           </Text>
@@ -114,11 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minHeight: 680
   },
-  topRow: {
-    position: "absolute",
-    top: 0,
-    left: 0
-  },
   brandBlock: {
     alignItems: "center",
     gap: 10,
@@ -131,14 +117,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 10 },
     shadowRadius: 22,
     elevation: 4
-  },
-  logo: {
-    width: 72,
-    height: 72,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center"
   },
   centerText: {
     textAlign: "center"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Screen } from "@/components/Screen";
@@ -43,9 +44,17 @@ export function RegisterScreen({ route, navigation }: Props) {
     <Screen>
       <BackButton onPress={() => navigation.goBack()} />
       <Card style={styles.card}>
-        <Text variant="headline" color={colors.primary}>
-          Бүртгэл үүсгэх
-        </Text>
+        <View style={styles.brandRow}>
+          <BrandLogo size={44} />
+          <View style={styles.brandCopy}>
+            <Text variant="caption" color={colors.onSurfaceVariant}>
+              e-Lawyer
+            </Text>
+            <Text variant="headline" color={colors.primary}>
+              Бүртгэл үүсгэх
+            </Text>
+          </View>
+        </View>
         <Text color={colors.onSurfaceVariant}>Өөрийн үүргийг сонгоно уу. Апп танд тохирсон ажлын хэсгийг харуулна.</Text>
         <View style={styles.segment}>
           {(["CLIENT", "LAWYER"] as const).map((item) => (
@@ -72,6 +81,15 @@ export function RegisterScreen({ route, navigation }: Props) {
 
 const styles = StyleSheet.create({
   card: { gap: 16, marginTop: 40 },
+  brandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12
+  },
+  brandCopy: {
+    flex: 1,
+    gap: 2
+  },
   segment: {
     flexDirection: "row",
     padding: 4,

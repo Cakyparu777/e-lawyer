@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { BackButton } from "@/components/BackButton";
-import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
 import { GlassSurface } from "@/components/GlassSurface";
 import { Screen } from "@/components/Screen";
@@ -18,6 +16,46 @@ type Props = {
   navigation: { goBack: () => void };
 };
 
+function contactName(contact?: Record<string, string> | null) {
+  return contact?.username || "Хэрэглэгч";
+}
+
+function contactMeta(contact?: Record<string, string> | null) {
+  return contact?.phoneNumber || contact?.phone || contact?.email || "Холбогдох мэдээлэл алга";
+}
+
+function initialsFor(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const initials = `${parts[0]?.[0] ?? ""}${parts[1]?.[0] ?? ""}`;
+  return initials || "?";
+}
+
+function isSameDay(left: string, right: string) {
+  const leftDate = new Date(left);
+  const rightDate = new Date(right);
+
+  return (
+    leftDate.getFullYear() === rightDate.getFullYear() &&
+    leftDate.getMonth() === rightDate.getMonth() &&
+    leftDate.getDate() === rightDate.getDate()
+  );
+}
+
+function formatDay(value: string) {
+  return new Date(value).toLocaleDateString("mn-MN", {
+    month: "short",
+    day: "numeric",
+    weekday: "short"
+  });
+}
+
+function formatTime(value: string) {
+  return new Date(value).toLocaleTimeString("mn-MN", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
 export function ChatScreen({ route, navigation }: Props) {
   const user = useAuthStore((state) => state.user);
   const thread = useChatThread(route.params.appointmentId);
@@ -25,11 +63,16 @@ export function ChatScreen({ route, navigation }: Props) {
   const [text, setText] = useState("");
   const [rtmStatus, setRtmStatus] = useState("SERVER_FALLBACK");
   const rtmSession = useRef<AgoraRtmSession | null>(null);
+  const scrollRef = useRef<ScrollView | null>(null);
 
   const peerContact = useMemo(() => {
     if (!thread.data || !user) return null;
     return user.role === "CLIENT" ? thread.data.lawyer_contact_snapshot : thread.data.client_contact_snapshot;
   }, [thread.data, user]);
+  const peerDisplayName = contactName(peerContact);
+  const peerDetails = contactMeta(peerContact);
+  const connected = rtmStatus === "CONNECTED";
+  const canSend = Boolean(text.trim()) && !sendMessage.isPending && Boolean(thread.data);
 
   useEffect(() => {
     let active = true;
@@ -79,56 +122,122 @@ export function ChatScreen({ route, navigation }: Props) {
 
   return (
     <Screen scroll={false} contentStyle={styles.screenContent}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={styles.wrap}>
-        <View style={styles.header}>
-          <BackButton onPress={navigation.goBack} />
-          <View style={styles.headerText}>
-            <Text variant="headline" color={colors.primary}>
-              Чат
-            </Text>
-            <Text variant="caption" color={colors.onSurfaceVariant}>
-              Захиалгын ID: {route.params.appointmentId.slice(0, 8)}
-            </Text>
-            <Text variant="caption" color={rtmStatus === "CONNECTED" ? colors.success : colors.onSurfaceVariant}>
-              {rtmStatus === "CONNECTED" ? "Шууд холболт идэвхтэй" : "Серверээр шинэчилж байна"}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        style={styles.wrap}
+      >
+        <GlassSurface style={styles.header} contentStyle={styles.headerContent} intensity={30}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Буцах" onPress={navigation.goBack} style={styles.backButton}>
+            <Ionicons name="chevron-back" size={24} color={colors.primary} />
+          </Pressable>
+          <View style={styles.avatar}>
+            <Text variant="label" color={colors.onPrimary} style={styles.avatarText}>
+              {initialsFor(peerDisplayName)}
             </Text>
           </View>
-        </View>
-
-        {peerContact ? (
-          <Card style={styles.contactCard}>
-            <Text variant="label">{peerContact.username}</Text>
-            <Text variant="caption" color={colors.onSurfaceVariant}>
-              {peerContact.phoneNumber} | {peerContact.email}
+          <View style={styles.headerText} accessible accessibilityLabel={`${peerDisplayName} чат`}>
+            <Text variant="label" color={colors.primary} numberOfLines={1}>
+              {peerDisplayName}
             </Text>
-          </Card>
-        ) : null}
+            <Text variant="caption" color={colors.onSurfaceVariant}>
+              {peerDetails}
+            </Text>
+          </View>
+          <View style={[styles.statusPill, connected ? styles.statusConnected : styles.statusFallback]}>
+            <View style={[styles.statusDot, connected ? styles.dotConnected : styles.dotFallback]} />
+            <Text variant="caption" color={connected ? colors.success : colors.warning}>
+              {connected ? "Live" : "Sync"}
+            </Text>
+          </View>
+        </GlassSurface>
 
         {thread.isLoading ? <EmptyState title="Чатыг ачаалж байна..." /> : null}
         {thread.isError ? <EmptyState title="Чат нээгдсэнгүй" body="Төлбөр баталгаажсан эсэхийг шалгана уу." /> : null}
 
-        <ScrollView style={styles.messages} contentContainerStyle={styles.messageContent} showsVerticalScrollIndicator={false}>
-          {thread.data?.messages.length === 0 ? <EmptyState title="Одоогоор мессеж алга" /> : null}
-          {thread.data?.messages.map((message: ChatMessage) => {
+        <ScrollView
+          ref={scrollRef}
+          style={styles.messages}
+          contentContainerStyle={styles.messageContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
+        >
+          {thread.data?.messages.length === 0 ? (
+            <EmptyState title="Одоогоор мессеж алга" body="Анхны мессежээ доороос бичээд эхлээрэй." />
+          ) : null}
+          {thread.data?.messages.map((message: ChatMessage, index: number) => {
             const mine = message.sender_id === user?.id;
             const automatic = message.message_type === "AUTO_RESPONSE";
+            const previous = thread.data?.messages[index - 1];
+            const next = thread.data?.messages[index + 1];
+            const startsGroup = !previous || previous.sender_id !== message.sender_id || !isSameDay(previous.created_at, message.created_at);
+            const endsGroup = !next || next.sender_id !== message.sender_id || !isSameDay(next.created_at, message.created_at);
+            const showDay = !previous || !isSameDay(previous.created_at, message.created_at);
+
             return (
-              <View key={message.id} style={[styles.bubble, mine ? styles.mine : styles.theirs]}>
-                {automatic ? (
-                  <Text variant="caption" color={mine ? colors.secondaryContainer : colors.secondary}>
-                    Автомат хариу
-                  </Text>
+              <View key={message.id}>
+                {showDay ? (
+                  <View style={styles.dayDivider}>
+                    <Text variant="caption" color={colors.onSurfaceVariant}>
+                      {formatDay(message.created_at)}
+                    </Text>
+                  </View>
                 ) : null}
-                <Text color={mine ? colors.onPrimary : colors.onSurfaceVariant}>{message.body}</Text>
-                <Text variant="caption" color={mine ? colors.secondaryContainer : colors.outline}>
-                  {new Date(message.created_at).toLocaleTimeString("mn-MN", { hour: "2-digit", minute: "2-digit" })}
-                </Text>
+                <View
+                  style={[
+                    styles.messageRow,
+                    mine ? styles.mineRow : styles.theirsRow,
+                    startsGroup ? styles.groupStart : styles.groupTight
+                  ]}
+                >
+                  {!mine && endsGroup ? (
+                    <View style={styles.smallAvatar}>
+                      <Text variant="caption" color={colors.onPrimary} style={styles.avatarText}>
+                        {initialsFor(peerDisplayName)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.avatarSpacer} />
+                  )}
+                  <View
+                    style={[
+                      styles.bubble,
+                      mine ? styles.mine : styles.theirs,
+                      mine && startsGroup ? styles.mineFirst : null,
+                      mine && endsGroup ? styles.mineLast : null,
+                      !mine && startsGroup ? styles.theirsFirst : null,
+                      !mine && endsGroup ? styles.theirsLast : null
+                    ]}
+                  >
+                    {automatic ? (
+                      <View style={styles.autoLabel}>
+                        <Ionicons name="sparkles" size={12} color={mine ? colors.secondaryContainer : colors.secondary} />
+                        <Text variant="caption" color={mine ? colors.secondaryContainer : colors.secondary}>
+                          Автомат хариу
+                        </Text>
+                      </View>
+                    ) : null}
+                    <Text color={mine ? colors.onPrimary : colors.onSurface} style={styles.messageText}>
+                      {message.body}
+                    </Text>
+                    <View style={[styles.timeRow, mine ? styles.mineTimeRow : styles.theirsTimeRow]}>
+                      <Text variant="caption" color={mine ? colors.secondaryContainer : colors.outline}>
+                        {formatTime(message.created_at)}
+                      </Text>
+                      {mine ? <Ionicons name="checkmark-done" size={13} color={colors.secondaryContainer} /> : null}
+                    </View>
+                  </View>
+                </View>
               </View>
             );
           })}
         </ScrollView>
 
-        <GlassSurface style={styles.inputRow} contentStyle={styles.inputContent} intensity={38}>
+        <GlassSurface style={styles.composer} contentStyle={styles.composerContent} intensity={40}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Хавсралт нэмэх" style={styles.toolButton}>
+            <Ionicons name="add" size={22} color={colors.primary} />
+          </Pressable>
           <TextInput
             value={text}
             onChangeText={setText}
@@ -140,65 +249,226 @@ export function ChatScreen({ route, navigation }: Props) {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Мессеж илгээх"
-            disabled={!text.trim() || sendMessage.isPending}
+            disabled={!canSend}
             onPress={send}
-            style={({ pressed }) => [styles.sendButton, pressed ? styles.pressed : null, !text.trim() ? styles.disabled : null]}
+            style={({ pressed }) => [styles.sendButton, pressed ? styles.pressed : null, !canSend ? styles.disabled : null]}
           >
-            <Ionicons name="send" size={18} color={colors.onPrimary} />
+            {sendMessage.isPending ? (
+              <Ionicons name="ellipsis-horizontal" size={20} color={colors.onPrimary} />
+            ) : (
+              <Ionicons name="arrow-up" size={20} color={colors.onPrimary} />
+            )}
           </Pressable>
         </GlassSurface>
+
+        <View style={styles.threadMeta}>
+          <Ionicons name="lock-closed" size={12} color={colors.outline} />
+          <Text variant="caption" color={colors.outline} numberOfLines={1}>
+            Захиалга #{route.params.appointmentId.slice(0, 8)}
+          </Text>
+        </View>
       </KeyboardAvoidingView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  screenContent: { paddingBottom: 8 },
-  wrap: { flex: 1 },
-  header: { flexDirection: "row", gap: 4, alignItems: "flex-start" },
-  headerText: { flex: 1 },
-  contactCard: { gap: 4, marginBottom: 10 },
-  messages: { flex: 1 },
-  messageContent: { gap: 10, paddingVertical: 12 },
-  bubble: {
-    maxWidth: "82%",
-    borderRadius: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    gap: 4
+  screenContent: { padding: 12, paddingBottom: 8 },
+  wrap: { flex: 1, gap: 10 },
+  header: {
+    borderRadius: 28
   },
-  mine: { alignSelf: "flex-end", backgroundColor: colors.primary },
-  theirs: { alignSelf: "flex-start", backgroundColor: colors.surfaceContainerLow },
-  inputRow: {
-    borderRadius: 24,
+  headerContent: {
+    minHeight: 66,
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  backButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.surfaceContainerLow
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  smallAvatar: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 6
+  },
+  avatarSpacer: {
+    width: 32
+  },
+  avatarText: {
+    textTransform: "uppercase"
+  },
+  headerText: {
+    flex: 1,
+    gap: 2
+  },
+  statusPill: {
+    minHeight: 28,
+    borderRadius: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 9
+  },
+  statusConnected: {
+    backgroundColor: "#dff3e3"
+  },
+  statusFallback: {
+    backgroundColor: "#fff3d6"
+  },
+  statusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4
+  },
+  dotConnected: {
+    backgroundColor: colors.success
+  },
+  dotFallback: {
+    backgroundColor: colors.warning
+  },
+  messages: {
+    flex: 1
+  },
+  messageContent: {
+    paddingTop: 4,
+    paddingBottom: 12
+  },
+  dayDivider: {
+    alignSelf: "center",
+    borderRadius: 999,
+    backgroundColor: colors.surfaceContainer,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    marginVertical: 10
+  },
+  messageRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    width: "100%"
+  },
+  mineRow: {
+    justifyContent: "flex-end"
+  },
+  theirsRow: {
+    justifyContent: "flex-start"
+  },
+  groupStart: {
     marginTop: 8
   },
-  inputContent: {
+  groupTight: {
+    marginTop: 3
+  },
+  bubble: {
+    maxWidth: "80%",
+    borderRadius: 20,
+    paddingHorizontal: 13,
+    paddingVertical: 9,
+    gap: 5
+  },
+  mine: {
+    alignSelf: "flex-end",
+    backgroundColor: colors.primary
+  },
+  theirs: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.surfaceContainerLowest,
+    borderWidth: 1,
+    borderColor: colors.outlineVariant
+  },
+  mineFirst: {
+    borderTopRightRadius: 8
+  },
+  mineLast: {
+    borderBottomRightRadius: 8
+  },
+  theirsFirst: {
+    borderTopLeftRadius: 8
+  },
+  theirsLast: {
+    borderBottomLeftRadius: 8
+  },
+  autoLabel: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
+  messageText: {
+    lineHeight: 21
+  },
+  timeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
+  mineTimeRow: {
+    justifyContent: "flex-end"
+  },
+  theirsTimeRow: {
+    justifyContent: "flex-start"
+  },
+  composer: {
+    borderRadius: 26
+  },
+  composerContent: {
     flexDirection: "row",
     gap: 8,
     alignItems: "flex-end",
     padding: 6
   },
+  toolButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.surfaceContainerLow
+  },
   input: {
     flex: 1,
-    minHeight: 44,
-    maxHeight: 120,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.outlineVariant,
+    minHeight: 42,
+    maxHeight: 118,
+    borderRadius: 21,
     backgroundColor: colors.surfaceContainerLowest,
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     paddingVertical: 10,
-    color: colors.onSurface
+    color: colors.onSurface,
+    fontSize: 15
   },
   sendButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.primary
   },
   pressed: { opacity: 0.82 },
-  disabled: { opacity: 0.45 }
+  disabled: { opacity: 0.45 },
+  threadMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+    paddingBottom: 2
+  }
 });
